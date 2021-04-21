@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
-import 'package:san3a/Cart.dart';
+import 'Cart.dart';
 // ignore: unused_import
-import 'package:san3a/Checkout.dart';
+import 'Checkout.dart';
 // ignore: unused_import
-import 'package:san3a/Checkoutconfirm.dart';
+import 'Checkoutconfirm.dart';
 // ignore: unused_import
 import 'Product.dart';
 // ignore: unused_import

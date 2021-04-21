@@ -1,7 +1,7 @@
 // ignore: unused_import
 import 'dart:async';
 // ignore: unused_import
-import 'package:san3a/CustomerRequest.dart';
+import 'CustomerRequest.dart';
 // ignore: unused_import
 import 'ForgotPassword.dart';
 // ignore: unused_import
@@ -34,6 +34,8 @@ import 'Profile.dart';
 import 'Selleraddproduct.dart';
 // ignore: unused_import
 import 'TutorialList.dart';
+// ignore: unused_import
+import 'TutorialPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -57,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: TutorialList(),
+          body: TutorialPage(),
           resizeToAvoidBottomInset: true,
         ));
     //  Timer(Duration(seconds: 2), () {
