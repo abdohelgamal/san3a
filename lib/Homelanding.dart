@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'LandingLayout.dart';
 // ignore: unused_import
 import 'TutorialList.dart';
 // ignore: unused_import
@@ -48,7 +49,7 @@ class _HomelandingState extends State<Homelanding> {
               icon: Icon(Icons.dehaze_rounded), label: 'More'),
         ],
       ),
-      body: SafeArea(child: Searchresults()),
+      body: SafeArea(child: Landing()),
       backgroundColor: Colors.white,
     );
   }
