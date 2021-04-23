@@ -89,43 +89,31 @@ class _ProductState extends State<Product> {
           ),
           Row(
             children: [
-              Ink(
-                decoration: const ShapeDecoration(
-                  color: Color(0xffe0e0e0),
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                  splashRadius: 15,
-                  icon: Icon(Icons.horizontal_rule),
-                  iconSize: 20,
-                  color: Colors.grey[600],
-                  onPressed: () {},
-                ),
+              IconButton(
+                splashRadius: 15,
+                icon: Icon(Icons.horizontal_rule),
+                iconSize: 23,
+                color: Colors.grey[600],
+                onPressed: () {},
               ),
               SizedBox(
-                width: 20,
+                width: 15,
               ),
               Text(
                 '5',
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(
-                width: 20,
+                width: 15,
               ),
-              Ink(
-                decoration: const ShapeDecoration(
-                  color: Color(0xffe0e0e0),
-                  shape: CircleBorder(),
+              IconButton(
+                splashRadius: 15,
+                icon: Icon(
+                  Icons.add,
                 ),
-                child: IconButton(
-                  splashRadius: 15,
-                  icon: Icon(
-                    Icons.add,
-                  ),
-                  iconSize: 20,
-                  color: Colors.grey[600],
-                  onPressed: () {},
-                ),
+                iconSize: 23,
+                color: Colors.grey[600],
+                onPressed: () {},
               ),
             ],
             mainAxisAlignment: MainAxisAlignment.start,

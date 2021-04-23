@@ -1,6 +1,8 @@
 // ignore: unused_import
 import 'dart:async';
 // ignore: unused_import
+import 'package:san3a/BestSeller.dart';
+
 import 'CustomerRequest.dart';
 // ignore: unused_import
 import 'ForgotPassword.dart';
@@ -59,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: TutorialPage(),
+          body: Homelanding(),
           resizeToAvoidBottomInset: true,
         ));
     //  Timer(Duration(seconds: 2), () {

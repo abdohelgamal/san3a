@@ -69,7 +69,7 @@ class _BestSellerState extends State<BestSeller> {
       SizedBox(
         height: 30,
       ),
-      ListView(
+      ListView(padding: EdgeInsets.symmetric(horizontal: 15),
         children: [
           Card(
               child: Padding(

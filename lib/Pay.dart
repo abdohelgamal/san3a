@@ -49,7 +49,7 @@ class _PayState extends State<Pay> {
             ),
           ),
           Text(
-            'Choose the payment method this suits me',
+            'Choose the payment method this suits you',
             style: TextStyle(
               fontSize: 20,
             ),

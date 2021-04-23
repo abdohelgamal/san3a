@@ -149,7 +149,7 @@ class _SellerAddProductState extends State<SellerAddProduct> {
                     ),
                     onPressed: () {},
                     child: Text(
-                      'Next',
+                      'Add',
                       style: TextStyle(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,

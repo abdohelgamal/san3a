@@ -18,15 +18,17 @@ class _UserProfileState extends State<UserProfile> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 textBaseline: TextBaseline.alphabetic,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.white,
-                    child: Image.asset(
-                      'assets/fb logo.png',
-                    ),
-                    radius: 75,
-                  ),
+                children: [Container(
+  width: 150,
+  height: 150,
+  decoration: BoxDecoration(
+	shape: BoxShape.circle,
+	image: DecorationImage(
+	  image: NetworkImage('https://googleflutter.com/sample_image.jpg'),
+	  fit: BoxFit.fill
+	),
+  ),
+),
                   SizedBox(
                     width: 15,
                   ),

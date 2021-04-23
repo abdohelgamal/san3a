@@ -32,10 +32,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
             padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
             child: TextField(
               decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(15),
+                  contentPadding: EdgeInsets.all(18),
                   labelText: 'Please enter your email or phone number',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
+                      borderRadius: BorderRadius.circular(18))),
             ),
           ),
           Container(
