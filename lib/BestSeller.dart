@@ -5,11 +5,14 @@ class BestSeller extends StatefulWidget {
   _BestSellerState createState() => _BestSellerState();
 }
 
+enum Sorting { mostselling, toprated, mostexpensive, cheapest }
+Sorting sorttype = Sorting.mostselling;
+
 class _BestSellerState extends State<BestSeller> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SafeArea(
+    return Scaffold(
+        body: SafeArea(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
@@ -46,22 +49,46 @@ class _BestSellerState extends State<BestSeller> {
           SizedBox(
             width: 50,
           ),
-          //TODO: implementDropdown
           DropdownButton(
+              value: sorttype,
               onTap: () {},
               onChanged: (string) {},
               items: <DropdownMenuItem>[
                 DropdownMenuItem(
+                  value: Sorting.mostselling,
                   child: Text('Best Match'),
+                  onTap: () {
+                    setState(() {
+                      sorttype = Sorting.mostselling;
+                    });
+                  },
                 ),
                 DropdownMenuItem(
+                  value: Sorting.toprated,
                   child: Text('Top Rated'),
+                  onTap: () {
+                    setState(() {
+                      sorttype = Sorting.toprated;
+                    });
+                  },
                 ),
                 DropdownMenuItem(
                   child: Text('Price : high -> low'),
+                  value: Sorting.mostexpensive,
+                  onTap: () {
+                    setState(() {
+                      sorttype = Sorting.mostselling;
+                    });
+                  },
                 ),
                 DropdownMenuItem(
                   child: Text('Price : low -> high'),
+                  value: Sorting.cheapest,
+                  onTap: () {
+                    setState(() {
+                      sorttype = Sorting.cheapest;
+                    });
+                  },
                 ),
               ]),
         ],
@@ -69,7 +96,8 @@ class _BestSellerState extends State<BestSeller> {
       SizedBox(
         height: 30,
       ),
-      ListView(padding: EdgeInsets.symmetric(horizontal: 15),
+      ListView(
+        padding: EdgeInsets.symmetric(horizontal: 15),
         children: [
           Card(
               child: Padding(

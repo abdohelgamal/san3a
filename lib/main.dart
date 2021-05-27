@@ -1,44 +1,22 @@
-// ignore: unused_import
-import 'dart:async';
-// ignore: unused_import
 import 'LandingLayout.dart';
-// ignore: unused_import
 import 'BestSeller.dart';
-// ignore: unused_import
 import 'CustomerRequest.dart';
-// ignore: unused_import
 import 'ForgotPassword.dart';
-// ignore: unused_import
 import 'Interface.dart';
-// ignore: unused_import
 import 'Signuppage.dart';
-// ignore: unused_import
 import 'Logoscreen.dart';
-// ignore: unused_import
 import 'Searchresult.dart';
-// ignore: unused_import
 import 'Login.dart';
-// ignore: unused_import
 import 'Checkoutconfirm.dart';
-// ignore: unused_import
 import 'Cart.dart';
-// ignore: unused_import
 import 'Checkout.dart';
-// ignore: unused_import
 import 'Homelanding.dart';
-// ignore: unused_import
 import 'Pay.dart';
-// ignore: unused_import
 import 'Filters.dart';
-// ignore: unused_import
 import 'Product.dart';
-// ignore: unused_import
 import 'Profile.dart';
-// ignore: unused_import
 import 'Selleraddproduct.dart';
-// ignore: unused_import
 import 'TutorialList.dart';
-// ignore: unused_import
 import 'TutorialPage.dart';
 import 'package:flutter/material.dart';
 
@@ -46,10 +24,7 @@ void main() {
   runApp(MyApp());
 }
 
-//Widget currentview = LogoScreen();
-
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -58,16 +33,35 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: {
+          'bestseller': (context) => BestSeller(),
+          'cart': (context) => Cart(),
+          'chkout': (context) => Checkout(),
+          'chkoutconfirm': (context) => Checkoutconfirm(),
+          'custreq': (context) => CustomerRequest(),
+          'filters': (context) => Filters(),
+          'forgotpass': (context) => Forgotpassword(),
+          'homelnd': (context) => Homelanding(),
+          'interface': (context) => Interface(),
+          'logo': (context) => LogoScreen(),
+          'login': (context) => Login(),
+          'lndlout': (context) => Landing(),
+          'pay': (context) => Pay(),
+          'product': (context) => Product(),
+          'profile': (context) => UserProfile(),
+          'searchrslt': (context) => Searchresults(),
+          'selleradd': (context) => SellerAddProduct(),
+          'signup': (context) => Signup(),
+          'tutlst': (context) => TutorialList(),
+          'tutpg': (context) => TutorialPage()
+        },
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: Homelanding(),
+          body: Login(),
           resizeToAvoidBottomInset: true,
         ));
-    //  Timer(Duration(seconds: 2), () {
-    //    currentview = Interface();
-    // });
   }
 }

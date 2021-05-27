@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class LogoScreen extends StatefulWidget {
   @override
@@ -8,14 +9,13 @@ class LogoScreen extends StatefulWidget {
 class _LogoScreenState extends State<LogoScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(35.0),
-            child: Image.asset(
-              'assets/SAN3A logo final.png',
-            ),
-          )),
-    );
+    return Container(
+        child: Image.asset(
+          'assets/Logoscreen.png',width: double.maxFinite,height: double.maxFinite,fit: BoxFit.fill,
+        )
+        );
   }
+    //  Timer(Duration(seconds: 2), () {
+    //    currentview = Interface();
+    // });
 }

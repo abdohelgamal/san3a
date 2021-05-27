@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'ForgotPassword.dart';
+// ignore: unused_import
 import 'LandingLayout.dart';
 // ignore: unused_import
 import 'TutorialList.dart';

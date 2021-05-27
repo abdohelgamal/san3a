@@ -20,11 +20,9 @@ class _PayState extends State<Pay> {
               IconButton(
                 iconSize: 40,
                 color: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                Navigator.pop(context);},
                 icon: Icon(Icons.arrow_back_ios_rounded),
-              ),
-              SizedBox(
-                height: 20,
               ),
             ],
           ),
@@ -33,17 +31,15 @@ class _PayState extends State<Pay> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //TODO:add the real photos instead of the placeholders
                 Image.asset(
-                  'assets/SAN3A logo final.png',
-                  width: 150,
+                  'assets/visa.png',width: 100,
                 ),
                 SizedBox(
                   width: 50,
                 ),
                 Image.asset(
-                  'assets/SAN3A logo final.png',
-                  width: 150,
+                  'assets/mastercard.png',
+                  width: 100,
                 ),
               ],
             ),
@@ -131,46 +127,24 @@ class _PayState extends State<Pay> {
           SizedBox(
             height: 20,
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 180,
-                height: 60,
-                // ignore: deprecated_member_use
-                child: RaisedButton(
-                    textColor: Colors.black54,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(12)),
-                    onPressed: () {},
-                    color: Colors.red,
-                    child: Text(
-                      'Confirm',
-                      style: TextStyle(
-                        fontSize: 20,color: Colors.white
-                      ),
-                    )),
-              ),SizedBox(width: 50,),
-              SizedBox(
-                width: 180,
-                height: 60,
-                // ignore: deprecated_member_use
-                child: RaisedButton(
-                    textColor: Colors.black54,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(12)),
-                    color: Colors.white,
-                    onPressed: () {},
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red,
-                        fontSize: 20,
-                      ),
-                    )),
-              ),
-            ],
-          ),
+          SizedBox(
+            width: 180,
+            height: 60,
+            // ignore: deprecated_member_use
+            child: RaisedButton(
+                textColor: Colors.black54,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12)),
+                onPressed: () {},
+                color: Colors.red,
+                child: Text(
+                  'Confirm',
+                  style: TextStyle(
+                    fontSize: 20,color: Colors.white
+                  ),
+                )),
+          ),SizedBox(width: 50,),
         ])));
   }
 }

@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:san3a/api/res.dart';
+import "api/auth.dart";
 
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
+String temp = ' ';
+Res res;
+String username, password;
+
 class _LoginState extends State<Login> {
+  void _loginbutton(String uname, String pass) async {
+    res = await AuthApi.login(uname, pass);
+    print(res.message);
+  }
+
+  String _checktextval() {
+    if (res.success == false) {
+      return res.message;
+    } else {
+      Navigator.pushNamed(context, 'lndlout');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SafeArea(
+    return Scaffold(
+        body: SafeArea(
             child: ListView(
                 padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
                 children: [
@@ -20,7 +39,9 @@ class _LoginState extends State<Login> {
               IconButton(
                 iconSize: 40,
                 color: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.arrow_back_ios_rounded),
               ),
               SizedBox(
@@ -51,6 +72,9 @@ class _LoginState extends State<Login> {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
               labelText: 'Your name',
             ),
+            onChanged: (val) {
+              username = val;
+            },
           ),
           SizedBox(
             height: 20,
@@ -60,17 +84,23 @@ class _LoginState extends State<Login> {
             decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
-              labelText: 'Email',
+              labelText: 'Your Password',
             ),
+            onChanged: (val) {
+              password = val;
+            },
           ),
           SizedBox(
             height: 20,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text('$temp',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w600),),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'forgotpass');
+                },
                 child: Text(
                   'Forgot your password?',
                   style: TextStyle(fontSize: 18, color: Colors.blue),
@@ -108,11 +138,9 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
-
           SizedBox(
             height: 30,
           ),
-          //TODO: Add fb and google photos
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -120,6 +148,11 @@ class _LoginState extends State<Login> {
                 width: 80,
                 height: 80,
                 child: FloatingActionButton(
+                  heroTag: null,
+                  child: Image.asset(
+                    'assets/facebook.png',
+                    height: 50,
+                  ),
                   backgroundColor: Colors.white,
                   onPressed: () {},
                 ),
@@ -131,6 +164,11 @@ class _LoginState extends State<Login> {
                 width: 80,
                 height: 80,
                 child: FloatingActionButton(
+                  heroTag: null,
+                  child: Image.asset(
+                    'assets/twitter.png',
+                    height: 50,
+                  ),
                   backgroundColor: Colors.white,
                   onPressed: () {},
                 ),
@@ -142,6 +180,11 @@ class _LoginState extends State<Login> {
                 width: 80,
                 height: 80,
                 child: FloatingActionButton(
+                  heroTag: null,
+                  child: Image.asset(
+                    'assets/google.png',
+                    height: 50,
+                  ),
                   backgroundColor: Colors.white,
                   onPressed: () {},
                 ),
@@ -166,7 +209,12 @@ class _LoginState extends State<Login> {
                     },
                   ),
                 ),
-                onPressed: () {},
+                onPressed: ()async {
+                 await _loginbutton(username, password);
+                  setState(() {
+                    temp = _checktextval();
+                  }); 
+                },
                 child: Text(
                   'Log in',
                   style: TextStyle(

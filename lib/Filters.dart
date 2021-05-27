@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-double rangemax =1000000  ;
-double rangemin = 0;
-double currentrangemax;
-double currentrangemin;
-double selectedrangemax;
-double selectedrangemin;
+const double rangemax = 10000;
+const double rangemin = 0;
+RangeValues currentRangeValues = const RangeValues(rangemin, rangemax);
 
 class Filters extends StatefulWidget {
   @override
@@ -172,11 +169,22 @@ class _FiltersState extends State<Filters> {
               SizedBox(
                 height: 20,
               ),
-            //  TODO: Rangeslider :(
-
-              // RangeSlider(min: rangemin,max: rangemax,
-              //     values: RangeValues(currentrangemin, currentrangemax),
-              //     ), 
+              RangeSlider(
+                labels: RangeLabels(
+                  currentRangeValues.start.round().toString(),
+                  currentRangeValues.end.round().toString(),
+                ),
+                min: rangemin,
+                max: rangemax,
+                values: currentRangeValues,
+                onChanged: (RangeValues values) {
+                  setState(() {
+                    currentRangeValues = values;
+                  });
+                },
+                activeColor: Colors.blue,
+                inactiveColor: Colors.grey.shade400,
+              ),
               SizedBox(
                 height: 40,
               ),

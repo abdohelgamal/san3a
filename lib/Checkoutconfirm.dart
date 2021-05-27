@@ -19,7 +19,9 @@ class _CheckoutconfirmState extends State<Checkoutconfirm> {
                 Icons.close_rounded,
                 size: 40,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               color: Colors.red,
             ),
           ),

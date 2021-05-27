@@ -25,7 +25,8 @@ class _CustomerRequestState extends State<CustomerRequest> {
                     child: IconButton(
                       iconSize: 40,
                       color: Colors.red,
-                      onPressed: () {},
+                      onPressed: () {
+                Navigator.pop(context);},
                       icon: Icon(Icons.arrow_back_ios_rounded),
                     )),
               ),

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Interface extends StatefulWidget {
@@ -15,7 +14,6 @@ class _InterfaceState extends State<Interface> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
           Row(
             textBaseline: TextBaseline.alphabetic,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -40,14 +38,19 @@ class _InterfaceState extends State<Interface> {
                 fontSize: 30,
               )),
           SizedBox(
-            height: 180,
+            height: 80,
           ),
-//TODO: Waiting for image to be added here
+          Image.asset(
+            'assets/interfaceimg.png',
+          ),
+          SizedBox(
+            height: 80,
+          ),
           SizedBox(
             height: 60,
             width: 400,
             // ignore: deprecated_member_use
-            child: RaisedButton(
+            child: RaisedButton(splashColor: Colors.red.shade200,
               shape: RoundedRectangleBorder(
                   side: BorderSide(width: 1, color: Colors.grey),
                   borderRadius: BorderRadius.circular(10)),
@@ -59,7 +62,9 @@ class _InterfaceState extends State<Interface> {
               ),
               textColor: Colors.white,
               color: Colors.red[700],
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'login');
+              },
             ),
           ),
           SizedBox(
@@ -69,7 +74,7 @@ class _InterfaceState extends State<Interface> {
             height: 60,
             width: 400,
             // ignore: deprecated_member_use
-            child: RaisedButton(
+            child: RaisedButton(splashColor: Colors.blue.shade200,
               shape: RoundedRectangleBorder(
                   side: BorderSide(width: 1, color: Colors.grey),
                   borderRadius: BorderRadius.circular(10)),
@@ -80,7 +85,9 @@ class _InterfaceState extends State<Interface> {
                   )),
               textColor: Colors.black,
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'signup');
+              },
             ),
           ),
           SizedBox(

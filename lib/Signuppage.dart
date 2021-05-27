@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:http/http.dart' as http ;
 
 class Signup extends StatefulWidget {
   @override
   _SignupState createState() => _SignupState();
 }
-class Radios extends StatefulWidget {
-  @override
-  _RaiosState createState() => _RaiosState();
-}
 
-class _RaiosState extends State<Radios> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}
 enum Typeofuser { customer, seller }
 Typeofuser _typeuser = Typeofuser.customer;
 
 class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         child: ListView(
+          shrinkWrap: true,
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
           children: [
             Align(
@@ -34,7 +24,9 @@ class _SignupState extends State<Signup> {
               child: IconButton(
                 iconSize: 40,
                 color: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.arrow_back_ios_rounded),
               ),
             ),
@@ -49,26 +41,33 @@ class _SignupState extends State<Signup> {
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                //TODO: Radiobuttons
-                // ListTile(title: Text('I am a customer'),
-                //   leading: Radio(
-                //       value: Typeofuser.customer,
-                //       groupValue: _typeuser,
-                //       onChanged: (Typeofuser? val) {}),
-                // ),
-                // ListTile(title: Text('I am a seller'),
-                //   leading: Radio(
-                //       value: Typeofuser.seller,
-                //       groupValue: _typeuser,
-                //       onChanged: (Typeofuser? val) {
-                        
-                //       }),
-                // )
+                Row(
+                  children:[ 
+                    Radio(
+                        value: Typeofuser.customer,
+                        groupValue: _typeuser,
+                        onChanged: (Typeofuser val) {
+                     setState(() {
+                       _typeuser = val;
+                       
+                     });     
+                        }),Text('I am a customer',style: TextStyle(fontSize: 17),),
+                  ]),Row(
+                  children:[ 
+                    Radio(
+                        value: Typeofuser.seller,
+                        groupValue: _typeuser,
+                        onChanged: (Typeofuser val) {
+                     setState(() {
+                       _typeuser = val;
+                       
+                     });     
+                        }),Text('I am a seller',style: TextStyle(fontSize: 17),),
+                  ]),
               ],
             ),
-
             SizedBox(
               height: 20,
             ),
@@ -83,7 +82,6 @@ class _SignupState extends State<Signup> {
             SizedBox(
               height: 25,
             ),
-
             TextField(
               style: TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration(
@@ -144,10 +142,9 @@ class _SignupState extends State<Signup> {
                 ),
               ],
             ),
-
             SizedBox(
               height: 30,
-            ), //TODO: Add fb and google photos
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -155,6 +152,11 @@ class _SignupState extends State<Signup> {
                   width: 80,
                   height: 80,
                   child: FloatingActionButton(
+                    heroTag: null,
+                    child: Image.asset(
+                      'assets/facebook.png',
+                      height: 50,
+                    ),
                     backgroundColor: Colors.white,
                     onPressed: () {},
                   ),
@@ -166,6 +168,11 @@ class _SignupState extends State<Signup> {
                   width: 80,
                   height: 80,
                   child: FloatingActionButton(
+                    heroTag: null,
+                    child: Image.asset(
+                      'assets/twitter.png',
+                      height: 50,
+                    ),
                     backgroundColor: Colors.white,
                     onPressed: () {},
                   ),
@@ -177,6 +184,11 @@ class _SignupState extends State<Signup> {
                   width: 80,
                   height: 80,
                   child: FloatingActionButton(
+                    heroTag: null,
+                    child: Image.asset(
+                      'assets/google.png',
+                      height: 50,
+                    ),
                     backgroundColor: Colors.white,
                     onPressed: () {},
                   ),
@@ -189,16 +201,16 @@ class _SignupState extends State<Signup> {
               height: 60,
               child: ElevatedButton(
                   style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: Colors.red))),
-                backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                    return Colors.red; // Use the component's default.
-                  },
-                ),
-              ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color: Colors.red))),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        return Colors.red; // Use the component's default.
+                      },
+                    ),
+                  ),
                   onPressed: () {},
                   child: Text(
                     'Sign up',
