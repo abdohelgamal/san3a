@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:san3a/api/auth.dart';
+import 'dart:math';
 
 class Cstmclip extends CustomClipper<Path> {
   @override
@@ -27,10 +31,177 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
+  List<Widget> _categories = [];
+  List<Widget> _featured = [];
+  List<Widget> _sellerBest = [];
+
+  void initState() {
+    super.initState();
+
+    Future.wait([
+      AuthApi.getcatagories(),
+      AuthApi.getProducts(),
+    ]).then((responses) {
+      http.Response categoriesRes = responses[0];
+      http.Response productsRes = responses[1];
+
+      List products = jsonDecode(productsRes.body);
+
+      List categories = jsonDecode(categoriesRes.body);
+      var featuredItem = AuthApi.getProductsFeatured(products)[0];
+      List bestSeller = AuthApi.getProductsBestseller(products);
+
+      List<Widget> categoriesList = [];
+      for (int index = 0; index < categories.length; index++) {
+        categoriesList.add(Column(
+          children: [
+            Image.network(
+              categories[index]['image'],
+              height: 100,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              categories[index]['name'].toString(),
+              style: TextStyle(fontSize: 15, color: Colors.black54),
+            )
+          ],
+        ));
+      }
+
+      List<Widget> featured = [
+        Image.network(featuredItem['image']),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: ClipPath(
+                clipper: Cstmclip(),
+                child: Container(
+                  // width: 120,
+                  height: 50, width: 140,
+                  decoration: BoxDecoration(color: Colors.cyan),
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: 20,
+                    right: 40,
+                  ),
+                  child: Center(
+                      child: Text(
+                    'Best Selling',
+                    style: TextStyle(color: Colors.white),
+                  )),
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Featured Product',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    featuredItem['description'],
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // ignore: deprecated_member_use
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13)),
+                    onPressed: () {},
+                    child: Text(
+                      'Purchase now',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    color: Colors.red,
+                    textColor: Colors.white,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ];
+
+      List<Widget> bestSellerList = [];
+      for (int index = 0; index < min(bestSeller.length, 6); index++) {
+        bestSellerList.add(Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(
+              bestSeller[index]['image'],
+              height: 200,
+            ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Text(
+                bestSeller[index]['name'],
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    bestSeller[index]['price'].toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.red,
+                    ),
+                  ),
+                  IconButton(
+                      color: Colors.red,
+                      icon: Icon(CupertinoIcons.heart),
+                      iconSize: 20,
+                      onPressed: () {})
+                ],
+              ),
+            ),
+          ],
+        ));
+      }
+
+      setState(() {
+        _categories = categoriesList;
+        _featured = featured;
+        _sellerBest = bestSellerList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // showcatagories();
     return Scaffold(
-          body: SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(18.0),
@@ -46,7 +217,8 @@ class _LandingState extends State<Landing> {
                       prefixIcon: Icon(Icons.search),
                       suffixIcon: Row(
                         children: [
-                          IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                          IconButton(
+                              icon: Icon(Icons.search), onPressed: () {}),
                           IconButton(icon: Icon(Icons.close), onPressed: () {})
                         ],
                       ),
@@ -57,80 +229,8 @@ class _LandingState extends State<Landing> {
                 SizedBox(
                   height: 20,
                 ),
-                Stack(alignment: Alignment.topLeft, children: [
-                  Image.network(
-                      'https://s.mc-doualiya.com/media/display/21c166b0-933c-11e9-9920-005056bff430/w:1280/p:16x9/sissi_10.webp'),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: ClipPath(
-                          clipper: Cstmclip(),
-                          child: Container(
-                            // width: 120,
-                            height: 50, width: 140,
-                            decoration: BoxDecoration(color: Colors.cyan),
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                              left: 20,
-                              right: 40,
-                            ),
-                            child: Center(
-                                child: Text(
-                              'Best Selling',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Featured Product',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'lorem ipsum ay klam hna 34an m4 la2y klam aktebow 3ayesz angez 9',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            // ignore: deprecated_member_use
-                            RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(13)),
-                              onPressed: () {},
-                              child: Text(
-                                'Purchase now',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              color: Colors.red,
-                              textColor: Colors.white,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
+                Stack(alignment: Alignment.topLeft, children: _featured
+                    ),
                 SizedBox(
                   height: 20,
                 ),
@@ -165,110 +265,7 @@ class _LandingState extends State<Landing> {
                     mainAxisSpacing: 1,
                     childAspectRatio: 1.2,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.network(
-                            'https://media.gemini.media/img/large/2020/4/7/2020_4_7_14_33_36_35.jpg',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(fontSize: 15, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                    ],
+                    children: _categories,
                   ),
                 ),
                 Row(
@@ -303,119 +300,7 @@ class _LandingState extends State<Landing> {
                     mainAxisSpacing: 25,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                            'https://cdn.al-ain.com/images/2021/3/30/145-161425-15707163970_700x400.jpg',
-                            height: 200,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              'Prod. name',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Prod. price',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                IconButton(
-                                    color: Colors.red,
-                                    icon: Icon(CupertinoIcons.heart),
-                                    iconSize: 20,
-                                    onPressed: () {})
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                            'https://cdn.al-ain.com/images/2021/3/30/145-161425-15707163970_700x400.jpg',
-                            height: 200,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              'Prod. name',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Prod. price',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              IconButton(
-                                  color: Colors.red,
-                                  icon: Icon(Icons.favorite_border),
-                                  iconSize: 20,
-                                  onPressed: () {})
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                            'https://cdn.al-ain.com/images/2021/3/30/145-161425-15707163970_700x400.jpg',
-                            height: 200,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              'Prod. name',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Prod. price',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              IconButton(
-                                  color: Colors.red,
-                                  icon: Icon(Icons.favorite_border),
-                                  iconSize: 20,
-                                  onPressed: () {})
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
+                    children: _sellerBest
                   ),
                 ),
               ],

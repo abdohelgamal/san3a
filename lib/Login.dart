@@ -17,13 +17,15 @@ class _LoginState extends State<Login> {
     print(res.message);
   }
 
+  // ignore: missing_return
   String _checktextval() {
     if (res.success == false) {
       return res.message;
-    } else {
-      Navigator.pushNamed(context, 'lndlout');
     }
-  }
+      Navigator.pushNamed(context, 'lndlout');
+      
+    }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,13 @@ class _LoginState extends State<Login> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('$temp',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w600),),
+              Text(
+                '$temp',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w600),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, 'forgotpass');
@@ -209,11 +217,12 @@ class _LoginState extends State<Login> {
                     },
                   ),
                 ),
-                onPressed: ()async {
-                 await _loginbutton(username, password);
+                onPressed: () async {
+                  // ignore: await_only_futures
+                  await _loginbutton(username, password);
                   setState(() {
                     temp = _checktextval();
-                  }); 
+                  });
                 },
                 child: Text(
                   'Log in',

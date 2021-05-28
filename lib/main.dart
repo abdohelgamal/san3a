@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: Login(),
+          body: Homelanding(),
           resizeToAvoidBottomInset: true,
         ));
   }

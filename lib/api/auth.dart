@@ -32,6 +32,35 @@ class AuthApi {
       }
 
       return Res(success: false, message: 'Wrong Credentials');
+
+      // TODO: save token
     });
+  }
+
+  static Future<http.Response> getcatagories() {
+    return http.get(_api(url: '/api/categories/'));
+  }
+
+  // getProducts Helpers
+  static getProductsCategory(List products, String category) {
+    return products.where((el) {
+      return el['product_category'] == category;
+    }).toList();
+  }
+
+  static getProductsBestseller(List products) {
+    return products.where((el) {
+      return el['bestseller'] == true;
+    }).toList();
+  }
+
+  static getProductsFeatured(List products) {
+    return products.where((el) {
+      return el['featured'] == true;
+    }).toList();
+  }
+
+  static Future getProducts() {
+    return http.get(_api(url: '/api/products/'));
   }
 }
