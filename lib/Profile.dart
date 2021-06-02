@@ -6,6 +6,11 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  void initState() {
+    super.initState();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,66 +20,46 @@ class _UserProfileState extends State<UserProfile> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textBaseline: TextBaseline.alphabetic,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 150,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              'https://googleflutter.com/sample_image.jpg'),
-                          fit: BoxFit.fill),
-                    ),
+                  Text(
+                    'User name',
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 15,
+                    height: 10,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'User name',
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text('User email',
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 23,
-                          )),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                          height: 45,
-                          width: 150,
-                          // ignore: deprecated_member_use
-                          child: RaisedButton(
-                            textColor: Colors.red,
-                            color: Colors.white,
-                            child: Text(
-                              'Edit Profile',
-                              style: TextStyle(fontSize: 17),
-                            ),
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(15)),
-                          )),
-                      SizedBox(
-                        height: 55,
-                      )
-                    ],
+                  Text('User email',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 23,
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      height: 45,
+                      width: 150,
+                      // ignore: deprecated_member_use
+                      child: RaisedButton(
+                        textColor: Colors.red,
+                        color: Colors.white,
+                        child: Text(
+                          'Edit Profile',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15)),
+                      )),
+                  SizedBox(
+                    height: 55,
                   )
                 ],
               ),

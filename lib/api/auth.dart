@@ -6,6 +6,24 @@ class AuthApi {
   static Uri _api({String url = '/'}) {
     return Uri.parse('http://20.37.244.156$url');
   }
+  
+
+// TODO: check later after login isa
+  static getuserdata(String u, String token) {
+    return http.get(_api(url: '/api/users/$u/'),
+        headers: {"Authorization": "Token $token"});
+    //     .then((res) {
+    //   var body = jsonDecode(res.body);
+    //   List<dynamic> x = [
+    //     body['id'],
+    //     body['username'],
+    //     body['email'],
+    //     body['first_name'],
+    //     body['last_name']
+    //   ];
+    //   return x;
+    // });
+  }
 
   static Future<Res> passwordReset(String email) {
     return http.post(
@@ -16,7 +34,6 @@ class AuthApi {
       if (res.statusCode < 300) {
         return Res(success: true, message: body['detail']);
       }
-
       return Res(success: false, message: body['email'][0]);
     }).catchError((err) {
       print(err);
@@ -30,10 +47,7 @@ class AuthApi {
       if (res.statusCode < 300) {
         return Res(success: true, message: body['token']);
       }
-
       return Res(success: false, message: 'Wrong Credentials');
-
-      // TODO: save token
     });
   }
 
@@ -60,7 +74,19 @@ class AuthApi {
     }).toList();
   }
 
-  static Future getProducts() {
+  static Future<http.Response> getProducts() {
     return http.get(_api(url: '/api/products/'));
+  }
+
+  static Future getProduct(int id) {
+    return http.get(_api(url: '/api/products/$id/'));
+  }
+
+  static Future getTutorialList() {
+    return http.get(_api(url: '/api/tutorials/'));
+  }
+
+  static Future getTutorial(int id) {
+    return http.get(_api(url: '/api/tutorials/$id/'));
   }
 }

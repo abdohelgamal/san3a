@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:san3a/api/auth.dart';
+import 'package:video_player/video_player.dart';
 
 class TutorialPage extends StatefulWidget {
   @override
@@ -7,6 +9,12 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
+  int tutid;
+  void initState() {
+    super.initState();
+    AuthApi.getTutorial(tutid).then((res) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +30,9 @@ class _TutorialPageState extends State<TutorialPage> {
                     IconButton(
                       iconSize: 40,
                       color: Colors.red,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       icon: Icon(Icons.arrow_back_ios_rounded),
                     ),
                     //TODO: searchwidget

@@ -1,31 +1,58 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:san3a/api/res.dart';
+import 'package:provider/provider.dart';
 import "api/auth.dart";
+import './api/userdata.dart';
 
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-String temp = ' ';
-Res res;
 String username, password;
 
 class _LoginState extends State<Login> {
-  void _loginbutton(String uname, String pass) async {
-    res = await AuthApi.login(uname, pass);
-    print(res.message);
+  String temp = '';
+
+  void _loginbutton(String uname, String pass, BuildContext context) async {
+    // res = await AuthApi.login(uname, pass);
+    var loginData = await AuthApi.login(uname, pass);
+    if (!loginData.success) {
+       return setState(() {
+        temp = loginData.message;
+      });
+    }
+
+    var userDataRes = await AuthApi.getuserdata(username, loginData.message);
+    var userData = jsonDecode(userDataRes.body);
+
+    User user = User(
+        id: userData['id'],
+        uname: userData['username'],
+        email: userData['email'],
+        image: userData['avatar'],
+        fname: userData['first_name'],
+        lname: userData['last_name'],
+        token: loginData.message);
+
+    var userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.user = user;
+    Navigator.pushNamed(context, 'lndlout');
   }
 
-  // ignore: missing_return
-  String _checktextval() {
-    if (res.success == false) {
-      return res.message;
-    }
-      Navigator.pushNamed(context, 'lndlout');
-      
-    }
-  
+  // // ignore: missing_return
+  // String _checktextval() {
+  //   if (res.success == false) {
+  //     return res.message;
+  //   }
+  //   // token = res.message;
+  //   // uname = tem[1];
+  //   // id = tem[0];
+  //   // email = tem[2];
+  //   // fname = tem[3];
+  //   // lname = tem[4];
+  //   Navigator.pushNamed(context, 'lndlout');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -217,13 +244,14 @@ class _LoginState extends State<Login> {
                     },
                   ),
                 ),
-                onPressed: () async {
-                  // ignore: await_only_futures
-                  await _loginbutton(username, password);
-                  setState(() {
-                    temp = _checktextval();
-                  });
-                },
+                onPressed: () => _loginbutton(username, password, context),
+                // async {
+                // ignore: await_only_futures
+                // _loginbutton(username, password);
+                // setState(() {
+                //   temp = _checktextval();
+                // });
+                // }
                 child: Text(
                   'Log in',
                   style: TextStyle(

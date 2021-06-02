@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+import 'package:san3a/Categories.dart';
+import 'package:san3a/api/userdata.dart';
 import 'LandingLayout.dart';
 import 'BestSeller.dart';
 import 'CustomerRequest.dart';
@@ -19,9 +22,17 @@ import 'Selleraddproduct.dart';
 import 'TutorialList.dart';
 import 'TutorialPage.dart';
 import 'package:flutter/material.dart';
+import './api/userdata.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -30,12 +41,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  void initState() {
+    super.initState();
+    // TODO: get cached token here if exists
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
           'bestseller': (context) => BestSeller(),
+          // 'botsheet': (context) => Btmsheet(),
           'cart': (context) => Cart(),
+          'categories': (context) => Categories(),
           'chkout': (context) => Checkout(),
           'chkoutconfirm': (context) => Checkoutconfirm(),
           'custreq': (context) => CustomerRequest(),
@@ -60,7 +78,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: Homelanding(),
+          body: Login(),
           resizeToAvoidBottomInset: true,
         ));
   }

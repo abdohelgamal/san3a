@@ -1,15 +1,87 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:search_widget/search_widget.dart';
+import 'package:san3a/api/auth.dart';
+// import 'package:search_widget/search_widget.dart';
 
 class TutorialList extends StatefulWidget {
   @override
   _TutorialListState createState() => _TutorialListState();
 }
 
-// List<String> datatemp = [];
-
 class _TutorialListState extends State<TutorialList> {
+  List<Widget> widgets = [];
+  void initState() {
+    List<Widget> widget = [];
+    super.initState();
+    // TODO: check request
+    AuthApi.getTutorialList().then((res) {
+      Map<String, dynamic> tutorialsdata = jsonDecode(res.body);
+      print(tutorialsdata);
+      // tutorialsdata.forEach((k ,v ) {
+      //   widget.add( Container(
+      //     child: Column(
+      //       mainAxisSize: MainAxisSize.max,
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       children: [
+      //         IconButton(
+      //           onPressed: () {
+      //             Navigator.pushNamed(context, 'tutpg',
+      //                );
+      //           },
+      //           icon: Stack(
+      //             fit: StackFit.loose,
+      //             alignment: Alignment.center,
+      //             children: [
+      //               Container(
+      //                 width: 200,
+      //                 height: 200,
+      //                 decoration: BoxDecoration(
+      //                   shape: BoxShape.rectangle,
+      //                   image: DecorationImage(
+      //                       image: NetworkImage(
+      //                           'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg'
+      //                           // element['image'],
+      //                           ),
+      //                       fit: BoxFit.scaleDown),
+      //                 ),
+      //               ),
+      //               Icon(
+      //                 Icons.play_circle_outline,
+      //                 size: 70,
+      //                 color: Colors.white,
+      //               )
+      //             ],
+      //           ),
+      //         ),
+      //         SizedBox(
+      //           height: 20,
+      //         ),
+      //         Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //           children: [
+      //             Text(
+      //               element['title'],
+      //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      //             ),
+      //             Text(
+      //               '1:35',
+      //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      //             )
+      //           ],
+      //         )
+      //       ],
+      //     ),
+      //   ));
+      // });
+      // setState(() {
+      //   this.widgets = widgets;
+      // });
+    });
+  }
+
+  List<String> datatemp = [];
+  String currentword;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,12 +99,27 @@ class _TutorialListState extends State<TutorialList> {
                         onPressed: () {},
                         icon: Icon(Icons.arrow_back_ios_rounded),
                       ),
-                      //TODO: searchwidget
-                      // SearchWidget(
-                      //     dataList: datatemp,
-                      //     popupListItemBuilder: popupListItemBuilder,
-                      //     selectedItemBuilder: selectedItemBuilder,
-                      //     queryBuilder: queryBuilder)
+                      // TextField(
+                      //   onSubmitted: (query) {},
+                      //   onChanged: (e) {
+                      //     currentword = e;
+                      //   },
+                      //   maxLines: 1,
+                      //   strutStyle: StrutStyle(height: 1),
+                      //   decoration: InputDecoration(
+                      //       prefixIcon: Icon(Icons.search),
+                      //       suffixIcon: Row(
+                      //         children: [
+                      //           IconButton(
+                      //               icon: Icon(Icons.search), onPressed: () {}),
+                      //           IconButton(
+                      //               icon: Icon(Icons.close), onPressed: () {})
+                      //         ],
+                      //       ),
+                      //       border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(15)),
+                      //       hintText: 'Search for a product'),
+                      // ),
                     ],
                   ),
                   SizedBox(
@@ -46,523 +133,13 @@ class _TutorialListState extends State<TutorialList> {
                     height: 20,
                   ),
                   Expanded(
-                                      child: GridView.count(
-                      childAspectRatio: (200 / 240),
-                      shrinkWrap: true,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 15,
-                      crossAxisCount: 2,
-                      children: [
-                        Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ), Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 250,
-                          height: 550,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcwh4Q1hwoc5ESYzZ3HjgPB7c9ZnyYkRi6nA&usqp=CAU',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://pbs.twimg.com/profile_images/709812973519413248/dEupp81g_400x400.jpg',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 250,
-                          height: 550,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://vid.alarabiya.net/images/2020/02/09/55a74730-afa6-4c08-ab79-049434184652/55a74730-afa6-4c08-ab79-049434184652_16x9_1200x676.JPG?width=1138',
-                                          ),
-                                          fit: BoxFit.scaleDown),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    size: 70,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'video name',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '1:35',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: GridView.count(
+                        childAspectRatio: (200 / 240),
+                        shrinkWrap: true,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        crossAxisCount: 2,
+                        children: widgets),
                   ),
                 ])));
   }

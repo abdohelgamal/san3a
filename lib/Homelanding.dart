@@ -24,20 +24,117 @@ import 'Profile.dart';
 // ignore: unused_import
 import 'CustomerRequest.dart';
 
+class Btmsheet extends StatefulWidget {
+  @override
+  _BtmsheetState createState() => _BtmsheetState();
+}
+
+class _BtmsheetState extends State<Btmsheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 370,
+      width: double.infinity,
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Customer request',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Categories',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Tutorial',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+          // TextButton(
+          //     onPressed: () {},
+          //     child: Text(
+          //       'Seller product',
+          //       style: TextStyle(
+          //           fontSize: 20,
+          //           color: Colors.grey,
+          //           fontWeight: FontWeight.w400),
+          //     )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'About us',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Help',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Settings',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+              )),
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    );
+  }
+}
+
 class Homelanding extends StatefulWidget {
   @override
   _HomelandingState createState() => _HomelandingState();
 }
+
 //TODO: Fix scrolling in searchresults , tutoriallist and tutorialpage
 class _HomelandingState extends State<Homelanding> {
+  List<dynamic> pagename = [Landing(), ' ', Cart(), UserProfile()];
+  Widget _currentpage = BestSeller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //  bottomSheet: Btmsheet(),
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
         backgroundColor: Colors.blue,
-        onTap: (int) {},
+        onTap: (index) {
+          if (index == 0 || index == 2 || index == 3) {
+            setState(() {
+              _currentpage = pagename[index];
+            });
+          }
+        },
         iconSize: 30,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.red,
         type: BottomNavigationBarType.shifting,
@@ -49,10 +146,17 @@ class _HomelandingState extends State<Homelanding> {
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), label: 'Profile'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.dehaze_rounded), label: 'More'),
+              icon: IconButton(icon:Icon(
+                    Icons.dehaze_rounded,),
+                  
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context, builder: (context) => Btmsheet());
+                  },),
+              label: 'More'),
         ],
       ),
-      body: SafeArea(child: Landing()),
+      body: SafeArea(child: _currentpage),
       backgroundColor: Colors.white,
     );
   }

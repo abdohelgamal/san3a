@@ -73,7 +73,10 @@ class _LandingState extends State<Landing> {
       }
 
       List<Widget> featured = [
-        Image.network(featuredItem['image']),
+        Image.network(
+          featuredItem['image'],
+          fit: BoxFit.cover,
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -94,7 +97,7 @@ class _LandingState extends State<Landing> {
                   child: Center(
                       child: Text(
                     'Best Selling',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   )),
                 ),
               ),
@@ -130,7 +133,9 @@ class _LandingState extends State<Landing> {
                   RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'product',  );
+                    },
                     child: Text(
                       'Purchase now',
                       style:
@@ -188,7 +193,6 @@ class _LandingState extends State<Landing> {
           ],
         ));
       }
-
       setState(() {
         _categories = categoriesList;
         _featured = featured;
@@ -199,7 +203,6 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    // showcatagories();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -211,7 +214,6 @@ class _LandingState extends State<Landing> {
                   onSubmitted: (query) {},
                   onChanged: (e) {},
                   maxLines: 1,
-                  maxLength: 40,
                   strutStyle: StrutStyle(height: 1),
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.search),
@@ -229,8 +231,10 @@ class _LandingState extends State<Landing> {
                 SizedBox(
                   height: 20,
                 ),
-                Stack(alignment: Alignment.topLeft, children: _featured
-                    ),
+                Center(
+                  child:
+                      Stack(alignment: Alignment.topLeft, children: _featured),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -279,7 +283,9 @@ class _LandingState extends State<Landing> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'bestseller');
+                      },
                       child: Text(
                         'See more',
                         style: TextStyle(
@@ -295,13 +301,12 @@ class _LandingState extends State<Landing> {
                   height: 310,
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: GridView.count(
-                    crossAxisCount: 1,
-                    childAspectRatio: 1.25,
-                    mainAxisSpacing: 25,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: _sellerBest
-                  ),
+                      crossAxisCount: 1,
+                      childAspectRatio: 1.25,
+                      mainAxisSpacing: 25,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: _sellerBest),
                 ),
               ],
             ),
