@@ -116,7 +116,7 @@ class Homelanding extends StatefulWidget {
 //TODO: Fix scrolling in searchresults , tutoriallist and tutorialpage
 class _HomelandingState extends State<Homelanding> {
   List<dynamic> pagename = [Landing(), ' ', Cart(), UserProfile()];
-  Widget _currentpage = BestSeller();
+  Widget _currentpage = Landing();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

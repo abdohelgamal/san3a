@@ -8,8 +8,8 @@ class Pay extends StatefulWidget {
 class _PayState extends State<Pay> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SafeArea(
+    return Scaffold(
+        body: SafeArea(
             child: ListView(
                 padding: const EdgeInsets.only(left: 35, right: 35, top: 15),
                 children: [

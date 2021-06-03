@@ -18,12 +18,13 @@ class _LoginState extends State<Login> {
     // res = await AuthApi.login(uname, pass);
     var loginData = await AuthApi.login(uname, pass);
     if (!loginData.success) {
-       return setState(() {
+      return setState(() {
         temp = loginData.message;
       });
     }
 
-    var userDataRes = await AuthApi.getuserdata(username, loginData.message);
+    AuthApi.token = loginData.message;
+    var userDataRes = await AuthApi.getuserdata();
     var userData = jsonDecode(userDataRes.body);
 
     User user = User(
@@ -37,7 +38,7 @@ class _LoginState extends State<Login> {
 
     var userProvider = Provider.of<UserProvider>(context, listen: false);
     userProvider.user = user;
-    Navigator.pushNamed(context, 'lndlout');
+    Navigator.pushNamed(context, 'homelnd');
   }
 
   // // ignore: missing_return

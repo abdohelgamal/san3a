@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:san3a/Categories.dart';
+import 'package:san3a/api/auth.dart';
 import 'package:san3a/api/userdata.dart';
 import 'LandingLayout.dart';
 import 'BestSeller.dart';
@@ -16,7 +20,6 @@ import 'Checkout.dart';
 import 'Homelanding.dart';
 import 'Pay.dart';
 import 'Filters.dart';
-import 'Product.dart';
 import 'Profile.dart';
 import 'Selleraddproduct.dart';
 import 'TutorialList.dart';
@@ -43,7 +46,26 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
-    // TODO: get cached token here if exists
+    final cache = FlutterSecureStorage();
+    cache.read(key: 'user').then((res) {
+      if (res == null) return;
+
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      final userData = jsonDecode(res);
+
+      User user = User(
+        token: userData['token'],
+        id: userData['id'],
+        uname: userData['uname'],
+        email: userData['email'],
+        fname: userData['fname'],
+        lname: userData['lname'],
+        image: userData['image'],
+      );
+
+      userProvider.user = user;
+      AuthApi.token = userData['token'];
+    });
   }
 
   @override
@@ -60,12 +82,19 @@ class _MyAppState extends State<MyApp> {
           'filters': (context) => Filters(),
           'forgotpass': (context) => Forgotpassword(),
           'homelnd': (context) => Homelanding(),
-          'interface': (context) => Interface(),
+          'interface': (context) {
+            final userProvider =
+                Provider.of<UserProvider>(context, listen: false);
+            final user = userProvider.user;
+            if (user != null) {
+              return Homelanding();
+            }
+            return Interface();
+          },
           'logo': (context) => LogoScreen(),
           'login': (context) => Login(),
           'lndlout': (context) => Landing(),
           'pay': (context) => Pay(),
-          'product': (context) => Product(),
           'profile': (context) => UserProfile(),
           'searchrslt': (context) => Searchresults(),
           'selleradd': (context) => SellerAddProduct(),
@@ -78,7 +107,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: Login(),
+          body: LogoScreen(),
           resizeToAvoidBottomInset: true,
         ));
   }

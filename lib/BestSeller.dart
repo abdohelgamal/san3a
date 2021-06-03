@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'api/auth.dart';
+import 'Product.dart';
 
 class BestSeller extends StatefulWidget {
   @override
@@ -25,85 +26,96 @@ class _BestSellerState extends State<BestSeller> {
         widgets.add(Card(
             child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Image.network(
-                element['image'],
-                height: 120,
-                width: 120,
-              ),
-              Container(
-                height: 120,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      element['name'],
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Row(
+          child: GestureDetector(onTap: (){Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return Product(
+                              itemid: element['id'],
+                            );
+                          },
+                        ),
+                      );},
+                      child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image.network(
+                    element['image'],
+                    height: 120,
+                    width: 120,
+                  ),
+                  Container(
+                    height: 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          'no. of  Reviews',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.yellow[600],
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '4.7',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20,
-                          ),
-                        )
+            Text(
+              element['name'],
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500),
+            ),
+            Row(
+              children: [
+                Text(
+                  'no. of  Reviews',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[600],
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '4.7',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                  ),
+                )
+              ],
+            ),
+            Text(
+              element['price'],
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 20,
+              ),
+            ),
                       ],
                     ),
-                    Text(
-                      element['price'],
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20,
-                      ),
+                  ),
+                  SizedBox(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+            IconButton(
+                icon: Icon(
+                  Icons.favorite_outline,
+                  color: Colors.red,
+                ),
+                onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.shopping_cart_outlined,
+                    color: Colors.red),
+                onPressed: () {})
+                      ],
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
-              SizedBox(),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                        icon: Icon(
-                          Icons.favorite_outline,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {}),
-                    IconButton(
-                        icon: Icon(Icons.shopping_cart_outlined,
-                            color: Colors.red),
-                        onPressed: () {})
-                  ],
-                ),
-              )
-            ],
           ),
         )));
       });

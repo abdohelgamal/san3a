@@ -13,8 +13,8 @@ class Filters extends StatefulWidget {
 class _FiltersState extends State<Filters> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SafeArea(
+    return Scaffold(
+        body: SafeArea(
             child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

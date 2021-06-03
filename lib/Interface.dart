@@ -9,8 +9,8 @@ class Interface extends StatefulWidget {
 class _InterfaceState extends State<Interface> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return Scaffold(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

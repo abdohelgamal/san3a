@@ -2,27 +2,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:san3a/api/res.dart';
 
+
 class AuthApi {
+  static String token = '';
+  static get _headers => {"Authorization": 'Token $token'};
+
   static Uri _api({String url = '/'}) {
     return Uri.parse('http://20.37.244.156$url');
   }
-  
 
-// TODO: check later after login isa
-  static getuserdata(String u, String token) {
-    return http.get(_api(url: '/api/users/$u/'),
-        headers: {"Authorization": "Token $token"});
-    //     .then((res) {
-    //   var body = jsonDecode(res.body);
-    //   List<dynamic> x = [
-    //     body['id'],
-    //     body['username'],
-    //     body['email'],
-    //     body['first_name'],
-    //     body['last_name']
-    //   ];
-    //   return x;
-    // });
+
+  static getuserdata() {
+    return http.get(
+      _api(url: '/api/users/me/'),
+      headers: _headers,
+    );
   }
 
   static Future<Res> passwordReset(String email) {
@@ -52,7 +46,7 @@ class AuthApi {
   }
 
   static Future<http.Response> getcatagories() {
-    return http.get(_api(url: '/api/categories/'));
+    return http.get(_api(url: '/api/categories/'), headers: _headers);
   }
 
   // getProducts Helpers
@@ -75,18 +69,19 @@ class AuthApi {
   }
 
   static Future<http.Response> getProducts() {
-    return http.get(_api(url: '/api/products/'));
+    print(_headers);
+    return http.get(_api(url: '/api/products/'), headers: _headers);
   }
 
-  static Future getProduct(int id) {
-    return http.get(_api(url: '/api/products/$id/'));
+  static  getProduct(int id) {
+    return http.get(_api(url: '/api/products/$id/'), headers: _headers).then((value) => value.body);
   }
 
   static Future getTutorialList() {
-    return http.get(_api(url: '/api/tutorials/'));
+    return http.get(_api(url: '/api/tutorials/'), headers: _headers);
   }
 
   static Future getTutorial(int id) {
-    return http.get(_api(url: '/api/tutorials/$id/'));
+    return http.get(_api(url: '/api/tutorials/$id/'), headers: _headers);
   }
 }

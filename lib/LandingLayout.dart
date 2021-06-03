@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:san3a/Product.dart';
+import 'package:san3a/Searchresult.dart';
 import 'package:san3a/api/auth.dart';
 import 'dart:math';
 
@@ -53,23 +55,39 @@ class _LandingState extends State<Landing> {
 
       List<Widget> categoriesList = [];
       for (int index = 0; index < categories.length; index++) {
-        categoriesList.add(Column(
-          children: [
-            Image.network(
-              categories[index]['image'],
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              categories[index]['name'].toString(),
-              style: TextStyle(fontSize: 15, color: Colors.black54),
-            )
-          ],
-        ));
+        categoriesList.add(ElevatedButton(
+          style: ButtonStyle(side: MaterialStateProperty.all(BorderSide.none),
+              backgroundColor: MaterialStateProperty.all(Colors.white)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return Searchresults(
+                      //TODO itemid: open search results page with products of the pressed Category,
+                      );
+                },
+              ),
+            );
+          },
+          child: Column(
+            children: [
+              Image.network(
+                categories[index]['image'],
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                categories[index]['name'].toString(),
+                style: TextStyle(fontSize: 15, color: Colors.black54),
+              )
+            ],
+          ),
+        ),);
       }
 
       List<Widget> featured = [
@@ -134,7 +152,16 @@ class _LandingState extends State<Landing> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13)),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'product',  );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return Product(
+                              itemid: featuredItem['id'],
+                            );
+                          },
+                        ),
+                      );
                     },
                     child: Text(
                       'Purchase now',
@@ -153,44 +180,58 @@ class _LandingState extends State<Landing> {
 
       List<Widget> bestSellerList = [];
       for (int index = 0; index < min(bestSeller.length, 6); index++) {
-        bestSellerList.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              bestSeller[index]['image'],
-              height: 200,
-            ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: Text(
-                bestSeller[index]['name'],
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+        bestSellerList.add(GestureDetector(onTap:(){  Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) {
+                              print("here ${bestSeller[index]['id']}");
+                              return Product(
+                                itemid: bestSeller[index]['id'],
+                              );
+                            },
+                          ),
+                        );},
+                  child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                bestSeller[index]['image'],
+                height: 200,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    bestSeller[index]['price'].toString(),
-                    style: TextStyle(
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: Text(
+                  bestSeller[index]['name'],
+                  style: TextStyle(
                       fontSize: 20,
-                      color: Colors.red,
-                    ),
-                  ),
-                  IconButton(
-                      color: Colors.red,
-                      icon: Icon(CupertinoIcons.heart),
-                      iconSize: 20,
-                      onPressed: () {})
-                ],
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      bestSeller[index]['price'].toString(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      ),
+                    ),
+                    IconButton(
+                        color: Colors.red,
+                        icon: Icon(CupertinoIcons.heart),
+                        iconSize: 20,
+                        onPressed: () {
+                         
+                        })
+                  ],
+                ),
+              ),
+            ],
+          ),
         ));
       }
       setState(() {
@@ -231,10 +272,7 @@ class _LandingState extends State<Landing> {
                 SizedBox(
                   height: 20,
                 ),
-                Center(
-                  child:
-                      Stack(alignment: Alignment.topLeft, children: _featured),
-                ),
+                Stack(alignment: Alignment.topLeft, children: _featured),
                 SizedBox(
                   height: 20,
                 ),
@@ -249,7 +287,9 @@ class _LandingState extends State<Landing> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'categories');
+                      },
                       child: Text(
                         'See more',
                         style: TextStyle(
@@ -266,7 +306,7 @@ class _LandingState extends State<Landing> {
                   padding: EdgeInsets.symmetric(vertical: 1),
                   child: GridView.count(
                     crossAxisCount: 1,
-                    mainAxisSpacing: 1,
+                    mainAxisSpacing: 5,
                     childAspectRatio: 1.2,
                     scrollDirection: Axis.horizontal,
                     children: _categories,

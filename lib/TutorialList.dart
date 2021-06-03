@@ -18,65 +18,65 @@ class _TutorialListState extends State<TutorialList> {
     AuthApi.getTutorialList().then((res) {
       Map<String, dynamic> tutorialsdata = jsonDecode(res.body);
       print(tutorialsdata);
-      // tutorialsdata.forEach((k ,v ) {
-      //   widget.add( Container(
-      //     child: Column(
-      //       mainAxisSize: MainAxisSize.max,
-      //       mainAxisAlignment: MainAxisAlignment.start,
-      //       children: [
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.pushNamed(context, 'tutpg',
-      //                );
-      //           },
-      //           icon: Stack(
-      //             fit: StackFit.loose,
-      //             alignment: Alignment.center,
-      //             children: [
-      //               Container(
-      //                 width: 200,
-      //                 height: 200,
-      //                 decoration: BoxDecoration(
-      //                   shape: BoxShape.rectangle,
-      //                   image: DecorationImage(
-      //                       image: NetworkImage(
-      //                           'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg'
-      //                           // element['image'],
-      //                           ),
-      //                       fit: BoxFit.scaleDown),
-      //                 ),
-      //               ),
-      //               Icon(
-      //                 Icons.play_circle_outline,
-      //                 size: 70,
-      //                 color: Colors.white,
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //           children: [
-      //             Text(
-      //               element['title'],
-      //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      //             ),
-      //             Text(
-      //               '1:35',
-      //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      //             )
-      //           ],
-      //         )
-      //       ],
-      //     ),
-      //   ));
-      // });
-      // setState(() {
-      //   this.widgets = widgets;
-      // });
+      tutorialsdata.forEach((k ,v ) {
+        widget.add( Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'tutpg',
+                     );
+                },
+                icon: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                'https://cdn.britannica.com/30/197230-050-A72E526C/Abdel-Fattah-al-Sisi-General-Assembly-of-the-2016.jpg'
+                                // element['image'],
+                                ),
+                            fit: BoxFit.scaleDown),
+                      ),
+                    ),
+                    Icon(
+                      Icons.play_circle_outline,
+                      size: 70,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'vid name',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '1:35',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
+            ],
+          ),
+        ));
+      });
+      setState(() {
+        this.widgets = widgets;
+      });
     });
   }
 

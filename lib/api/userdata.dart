@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class User {
-  String token;
   int id;
+  String fname;
   String uname;
   String email;
-  String fname;
   String lname;
   String image;
+  String token;
 
   User({
     this.token,
@@ -18,14 +21,33 @@ class User {
     this.lname,
     this.image,
   });
+
+  String toJson() {
+    Map user = Map();
+    user['id'] = id;
+    user['fname'] = fname;
+    user['uname'] = uname;
+    user['email'] = email;
+    user['lname'] = lname;
+    user['image'] = image;
+    user['token'] = token;
+
+    return jsonEncode(user);
+  }
 }
 
 class UserProvider with ChangeNotifier {
   User _user;
   User get user => _user;
   set user(User user) {
-    // TODO: cache new user or remove old one based on value.
     this._user = user;
     notifyListeners();
+
+    final cache = FlutterSecureStorage();
+    if (user == null) {
+      cache.delete(key: 'user').then((_) => null);
+    } else {
+      cache.write(key: 'user', value: user.toJson()).then((_) => null);
+    }
   }
 }

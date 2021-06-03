@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class LogoScreen extends StatefulWidget {
@@ -6,15 +8,21 @@ class LogoScreen extends StatefulWidget {
 }
 
 class _LogoScreenState extends State<LogoScreen> {
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 2), () {Navigator.pushReplacementNamed(context, 'interface');
+     // Navigator.pushNamed(context, 'interface');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Image.asset(
-          'assets/Logoscreen.png',width: double.maxFinite,height: double.maxFinite,fit: BoxFit.fill,
-        )
-        );
+    return Scaffold(
+        body: Image.asset(
+      'assets/Logoscreen.png',
+      width: double.maxFinite,
+      height: double.maxFinite,
+      fit: BoxFit.fill,
+    ));
   }
-    //  Timer(Duration(seconds: 2), () {
-    //    currentview = Interface();
-    // });
 }
