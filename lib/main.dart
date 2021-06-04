@@ -25,7 +25,7 @@ import 'Selleraddproduct.dart';
 import 'TutorialList.dart';
 import 'TutorialPage.dart';
 import 'package:flutter/material.dart';
-import './api/userdata.dart';
+import 'api/userdata.dart';
 
 void main() {
   runApp(
