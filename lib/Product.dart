@@ -15,14 +15,10 @@ class _ProductState extends State<Product> {
   Map<String, dynamic> prod;
   List<Widget> _relatedprods = [];
   int itemnumber = 1;
-  // final args = ModalRoute.of(context).settings.arguments as ProductArguments;
   void initState() {
     super.initState();
     AuthApi.getProduct(this.widget.itemid).then((body) {
-      print(body);
-      setState(() {
-        prod = jsonDecode(body);
-      });
+      prod = jsonDecode(body);
     });
     AuthApi.getProducts().then((res) {
       List relatedproducts = jsonDecode(res.body);
@@ -34,7 +30,6 @@ class _ProductState extends State<Product> {
               context,
               MaterialPageRoute<void>(
                 builder: (BuildContext context) {
-                  print("here ${relatedproducts[index]['id']}");
                   return Product(
                     itemid: relatedproducts[index]['id'],
                   );
@@ -87,7 +82,6 @@ class _ProductState extends State<Product> {
         });
       }
     });
-    print(_relatedprods);
   }
 
   @override
@@ -186,20 +180,26 @@ class _ProductState extends State<Product> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Related to :',
-                            style: TextStyle(fontSize: 23, color: Colors.blue),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),Text(//TODO return tags without prackets
-                            '${prod['tags']}',
-                            style: TextStyle(fontSize: 23, color: Colors.black54),
-                          ),
-                        ],
-                      ),
+                      Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            runAlignment: WrapAlignment.start,
+                            direction: Axis.vertical,
+                            children: [
+                              Text(
+                                'Related to :',
+                                style:
+                                    TextStyle(fontSize: 23, color: Colors.blue),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text('${prod['tags']}',
+                                //TODO return tags without prackets
+                               // '${prod['tags']}',
+                                style: TextStyle(
+                                    fontSize: 23, color: Colors.black54),
+                              ),
+                            ]),
                       SizedBox(
                         height: 15,
                       ),
@@ -292,8 +292,13 @@ class _ProductState extends State<Product> {
                       SizedBox(
                         height: 30,
                       ),
-                      Align(alignment: Alignment.center,
-                        child: Text('Related Products',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600),),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Related Products',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w600),
+                        ),
                       ),
                       SizedBox(
                         height: 20,

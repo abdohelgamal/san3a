@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:san3a/Categories.dart';
@@ -12,7 +11,6 @@ import 'ForgotPassword.dart';
 import 'Interface.dart';
 import 'Signuppage.dart';
 import 'Logoscreen.dart';
-import 'Searchresult.dart';
 import 'Login.dart';
 import 'Checkoutconfirm.dart';
 import 'Cart.dart';
@@ -96,7 +94,6 @@ class _MyAppState extends State<MyApp> {
           'lndlout': (context) => Landing(),
           'pay': (context) => Pay(),
           'profile': (context) => UserProfile(),
-          'searchrslt': (context) => Searchresults(),
           'selleradd': (context) => SellerAddProduct(),
           'signup': (context) => Signup(),
           'tutlst': (context) => TutorialList(),

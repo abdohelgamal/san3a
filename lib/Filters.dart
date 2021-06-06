@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 const double rangemax = 10000;
 const double rangemin = 0;

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:san3a/api/auth.dart';
-import 'package:video_player/video_player.dart';
 
 class TutorialPage extends StatefulWidget {
   @override

@@ -69,7 +69,7 @@ class AuthApi {
   }
 
   static Future<http.Response> getProducts() {
-    print(_headers);
+   
     return http.get(_api(url: '/api/products/'), headers: _headers);
   }
 

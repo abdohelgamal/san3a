@@ -14,7 +14,6 @@ class _CategoriesState extends State<Categories> {
     super.initState();
     AuthApi.getcatagories().then((res) {
       var categories = jsonDecode(res.body);
-      print(categories);
       List<Widget> categoriesList = [];
       for (int index = 0; index < categories.length; index++) {
         categoriesList.add(GestureDetector(
@@ -24,7 +23,7 @@ class _CategoriesState extends State<Categories> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) {
                   return Searchresults(
-                      //TODO itemid: open search results page with products of the pressed Category,
+                     category:  (categories[index]['name']).toString(),
                       );
                 },
               ),

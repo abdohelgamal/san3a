@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:advanced_search/advanced_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -46,48 +47,55 @@ class _LandingState extends State<Landing> {
     ]).then((responses) {
       http.Response categoriesRes = responses[0];
       http.Response productsRes = responses[1];
-
       List products = jsonDecode(productsRes.body);
-
       List categories = jsonDecode(categoriesRes.body);
       var featuredItem = AuthApi.getProductsFeatured(products)[0];
       List bestSeller = AuthApi.getProductsBestseller(products);
 
+      final _search = Set<String>();
+
+      for (int i = 0; i < products.length; i++) {
+        _search.add(products[i]['name']);
+        // if (searchableList.contains(products[i]['name']) == false) {
+        //   searchableList.add(products[i]['name']);
+        // }
+      }
+      // print(searchableList);
       List<Widget> categoriesList = [];
       for (int index = 0; index < categories.length; index++) {
-        categoriesList.add(ElevatedButton(
-          style: ButtonStyle(side: MaterialStateProperty.all(BorderSide.none),
-              backgroundColor: MaterialStateProperty.all(Colors.white)),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) {
-                  return Searchresults(
-                      //TODO itemid: open search results page with products of the pressed Category,
-                      );
-                },
-              ),
-            );
-          },
-          child: Column(
-            children: [
-              Image.network(
-                categories[index]['image'],
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                categories[index]['name'].toString(),
-                style: TextStyle(fontSize: 15, color: Colors.black54),
-              )
-            ],
+        categoriesList.add(
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return Searchresults(
+                      category: (categories[index]['name']).toString(),
+                    );
+                  },
+                ),
+              );
+            },
+            child: Column(
+              children: [
+                Image.network(
+                  categories[index]['image'],
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  categories[index]['name'].toString(),
+                  style: TextStyle(fontSize: 15, color: Colors.black54),
+                )
+              ],
+            ),
           ),
-        ),);
+        );
       }
 
       List<Widget> featured = [
@@ -180,18 +188,20 @@ class _LandingState extends State<Landing> {
 
       List<Widget> bestSellerList = [];
       for (int index = 0; index < min(bestSeller.length, 6); index++) {
-        bestSellerList.add(GestureDetector(onTap:(){  Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) {
-                              print("here ${bestSeller[index]['id']}");
-                              return Product(
-                                itemid: bestSeller[index]['id'],
-                              );
-                            },
-                          ),
-                        );},
-                  child: Column(
+        bestSellerList.add(GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return Product(
+                    itemid: bestSeller[index]['id'],
+                  );
+                },
+              ),
+            );
+          },
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
@@ -224,9 +234,7 @@ class _LandingState extends State<Landing> {
                         color: Colors.red,
                         icon: Icon(CupertinoIcons.heart),
                         iconSize: 20,
-                        onPressed: () {
-                         
-                        })
+                        onPressed: () {})
                   ],
                 ),
               ),
@@ -238,118 +246,128 @@ class _LandingState extends State<Landing> {
         _categories = categoriesList;
         _featured = featured;
         _sellerBest = bestSellerList;
+        searchableList = _search.toList();
       });
     });
   }
 
+  List<String> searchableList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                TextField(
-                  onSubmitted: (query) {},
-                  onChanged: (e) {},
-                  maxLines: 1,
-                  strutStyle: StrutStyle(height: 1),
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      suffixIcon: Row(
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.search), onPressed: () {}),
-                          IconButton(icon: Icon(Icons.close), onPressed: () {})
-                        ],
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      hintText: 'Search for a product'),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Stack(alignment: Alignment.topLeft, children: _featured),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Categories',
-                      style: TextStyle(
-                          fontSize: 27,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'categories');
-                      },
-                      child: Text(
-                        'See more',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  height: 150,
-                  padding: EdgeInsets.symmetric(vertical: 1),
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 1.2,
-                    scrollDirection: Axis.horizontal,
-                    children: _categories,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            children: [
+              AdvancedSearch(
+                // This is basically an Input Text Field
+                data: searchableList,
+                onItemTap: (index, stringword) {
+                  print('[SearchWord], $stringword');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Searchresults(
+                                searchword: stringword,
+                              )));
+                },
+                onSearchClear: () {},
+                onSubmitted: (value, value2) {
+                  // now you have a submitted search
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Searchresults(
+                                searchword: value,
+                              )));
+                },
+                onEditingProgress: (value, value2) {
+                  // user is trying to lookup something, may be you want to help him?
+                },
+                maxElementsToDisplay: 10,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Stack(alignment: Alignment.topLeft, children: _featured),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Categories',
+                    style: TextStyle(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Best Seller',
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'categories');
+                    },
+                    child: Text(
+                      'See more',
                       style: TextStyle(
-                          fontSize: 27,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w400),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'bestseller');
-                      },
-                      child: Text(
-                        'See more',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    )
-                  ],
+                  )
+                ],
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 150,
+                padding: EdgeInsets.symmetric(vertical: 1),
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 1.2,
+                  scrollDirection: Axis.horizontal,
+                  children: _categories,
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  height: 310,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: GridView.count(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1.25,
-                      mainAxisSpacing: 25,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      children: _sellerBest),
-                ),
-              ],
-            ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Best Seller',
+                    style: TextStyle(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'bestseller');
+                    },
+                    child: Text(
+                      'See more',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 310,
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: GridView.count(
+                    crossAxisCount: 1,
+                    childAspectRatio: 1.25,
+                    mainAxisSpacing: 25,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: _sellerBest),
+              ),
+            ],
           ),
         ),
       ),
