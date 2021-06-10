@@ -113,7 +113,6 @@ class Homelanding extends StatefulWidget {
   _HomelandingState createState() => _HomelandingState();
 }
 
-//TODO: Fix scrolling in searchresults , tutoriallist and tutorialpage
 class _HomelandingState extends State<Homelanding> {
   List<dynamic> pagename = [Landing(), ' ', Cart(), UserProfile()];
   Widget _currentpage = Landing();

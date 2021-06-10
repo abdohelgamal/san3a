@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:san3a/api/res.dart';
 
-
 class AuthApi {
   static String token = '';
   static get _headers => {"Authorization": 'Token $token'};
@@ -10,7 +9,6 @@ class AuthApi {
   static Uri _api({String url = '/'}) {
     return Uri.parse('http://20.37.244.156$url');
   }
-
 
   static getuserdata() {
     return http.get(
@@ -69,12 +67,13 @@ class AuthApi {
   }
 
   static Future<http.Response> getProducts() {
-   
     return http.get(_api(url: '/api/products/'), headers: _headers);
   }
 
-  static  getProduct(int id) {
-    return http.get(_api(url: '/api/products/$id/'), headers: _headers).then((value) => value.body);
+  static getProduct(int id) {
+    return http
+        .get(_api(url: '/api/products/$id/'), headers: _headers)
+        .then((value) => value.body);
   }
 
   static Future getTutorialList() {
@@ -83,5 +82,36 @@ class AuthApi {
 
   static Future getTutorial(int id) {
     return http.get(_api(url: '/api/tutorials/$id/'), headers: _headers);
+  }
+
+  static registeruser(String uname ,String mail, String pass1 ,String pass2) {
+return    http.post(_api(url: '/api/rest-auth/registration/'), body: {
+      "username": uname,
+      "email": mail,
+      "password1": pass1,
+      "password2": pass2
+    }).then((res) {
+      Map body = jsonDecode(res.body);
+      //print('body $body');
+    
+      if (res.statusCode < 300) {
+        return Res(success: true, message: body["detail"]);
+      }
+
+      final key = body.keys.first;
+      return Res(success: false, message: body[key][0]);
+
+      /*if (body["username"] != null) {
+         
+        return Res(success: false, message: body["username"] );
+      } else if (body["email"] != null) {
+        
+        return Res(success: false, message:  body["email"]);
+      } else if (body["password1"] != null) {
+         
+        return Res(success: false, message: body["password1"] );
+      }else if(body["non_field_errors"] != null){
+      return Res(success: false, message:body["non_field_errors"] );}*/
+    });
   }
 }
