@@ -17,11 +17,10 @@ import 'Cart.dart';
 import 'Checkout.dart';
 import 'Homelanding.dart';
 import 'Pay.dart';
-import 'Filters.dart';
 import 'Profile.dart';
 import 'Selleraddproduct.dart';
 import 'TutorialList.dart';
-import 'TutorialPage.dart';
+
 import 'package:flutter/material.dart';
 import 'api/userdata.dart';
 
@@ -77,7 +76,6 @@ class _MyAppState extends State<MyApp> {
           'chkout': (context) => Checkout(),
           'chkoutconfirm': (context) => Checkoutconfirm(),
           'custreq': (context) => CustomerRequest(),
-          'filters': (context) => Filters(),
           'forgotpass': (context) => Forgotpassword(),
           'homelnd': (context) => Homelanding(),
           'interface': (context) {
@@ -97,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           'selleradd': (context) => SellerAddProduct(),
           'signup': (context) => Signup(),
           'tutlst': (context) => TutorialList(),
-          'tutpg': (context) => TutorialPage()
+        
         },
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,

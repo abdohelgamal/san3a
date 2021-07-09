@@ -84,8 +84,8 @@ class AuthApi {
     return http.get(_api(url: '/api/tutorials/$id/'), headers: _headers);
   }
 
-  static registeruser(String uname ,String mail, String pass1 ,String pass2) {
-return    http.post(_api(url: '/api/rest-auth/registration/'), body: {
+  static registeruser(String uname, String mail, String pass1, String pass2) {
+    return http.post(_api(url: '/api/rest-auth/registration/'), body: {
       "username": uname,
       "email": mail,
       "password1": pass1,
@@ -93,7 +93,7 @@ return    http.post(_api(url: '/api/rest-auth/registration/'), body: {
     }).then((res) {
       Map body = jsonDecode(res.body);
       //print('body $body');
-    
+
       if (res.statusCode < 300) {
         return Res(success: true, message: body["detail"]);
       }
@@ -114,4 +114,10 @@ return    http.post(_api(url: '/api/rest-auth/registration/'), body: {
       return Res(success: false, message:body["non_field_errors"] );}*/
     });
   }
+
+  static getcart(){
+    return http.get(_api(url: '/api/rest-auth/registration/'),headers: _headers).then((res) {
+      Map body = jsonDecode(res.body);
+    });
+    }
 }

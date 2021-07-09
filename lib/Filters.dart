@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-const double rangemax = 10000;
-const double rangemin = 0;
-RangeValues currentRangeValues = const RangeValues(rangemin, rangemax);
-
 class Filters extends StatefulWidget {
+  Set<String> categoriesnames ={};
+  static const double rangemax = 10000;
+  static const double rangemin = 0;
+  RangeValues currentRangeValues = const RangeValues(rangemin, rangemax);
+  Filters(this.categoriesnames);
   @override
   _FiltersState createState() => _FiltersState();
 }
@@ -170,15 +171,15 @@ class _FiltersState extends State<Filters> {
               ),
               RangeSlider(
                 labels: RangeLabels(
-                  currentRangeValues.start.round().toString(),
-                  currentRangeValues.end.round().toString(),
+                  widget.currentRangeValues.start.round().toString(),
+                  widget.currentRangeValues.end.round().toString(),
                 ),
-                min: rangemin,
-                max: rangemax,
-                values: currentRangeValues,
+                min:  widget.currentRangeValues.start.toDouble(),
+                max:  widget.currentRangeValues.end.toDouble(),
+                values: widget.currentRangeValues,
                 onChanged: (RangeValues values) {
                   setState(() {
-                    currentRangeValues = values;
+                    widget.currentRangeValues = values;
                   });
                 },
                 activeColor: Colors.blue,
@@ -195,7 +196,11 @@ class _FiltersState extends State<Filters> {
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                      );
+                    },
                     child: Text(
                       'Apply Filter',
                       style: TextStyle(color: Colors.white, fontSize: 20),

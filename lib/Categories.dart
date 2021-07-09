@@ -23,8 +23,8 @@ class _CategoriesState extends State<Categories> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) {
                   return Searchresults(
-                     category:  (categories[index]['name']).toString(),
-                      );
+                    category: (categories[index]['name']).toString(),
+                  );
                 },
               ),
             );
@@ -37,10 +37,9 @@ class _CategoriesState extends State<Categories> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container( height: 200,
-                        child: Image.network(
-                      categories[index]['image']
-                    )),
+                    Container(
+                        height: 200,
+                        child: Image.network(categories[index]['image'])),
                     SizedBox(
                       height: 20,
                     ),
@@ -103,7 +102,8 @@ class _CategoriesState extends State<Categories> {
                 ),
               ),
             ),
-            GridView.count(physics: ScrollPhysics(),
+            GridView.count(
+                physics: ScrollPhysics(),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 childAspectRatio: 0.85,

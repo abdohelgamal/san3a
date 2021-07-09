@@ -14,21 +14,23 @@ Typeofuser _typeuser = Typeofuser.customer;
 class _SignupState extends State<Signup> {
   Future<void> _createuserbutton(
       String mail, String uname, String pass1, String pass2) async {
-         if(uname == null || mail == null || pass1 == null || pass2 == null ){   setState(() {
-      response = ' Please enter missing data';});
-      return;}
-      print('$mail - $uname - $pass1 - $pass2');
+    if (uname == null || mail == null || pass1 == null || pass2 == null) {
+      setState(() {
+        response = ' Please enter missing data';
+      });
+      return;
+    }
+    print('$mail - $uname - $pass1 - $pass2');
     Res data = await AuthApi.registeruser(uname, mail, pass1, pass2);
-   /* print(data);
+    /* print(data);
        setState(() {
       response = data.message;
       return;
     });*/
-    
-     setState(() {
+
+    setState(() {
       response = data.message;
     });
-  
   }
 
   String response = ' ';
@@ -160,13 +162,13 @@ class _SignupState extends State<Signup> {
             SizedBox(
               height: 10,
             ),
-            IconButton(
-                onPressed: () {
+            GestureDetector(
+                onTap: () {
                   setState(() {
                     passsecure = !passsecure;
                   });
                 },
-                icon: Row(
+                child : Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(
@@ -186,7 +188,10 @@ class _SignupState extends State<Signup> {
             SizedBox(
               height: 10,
             ),
-            Text('$response',style: TextStyle(fontSize: 20,color: Colors.blue.shade700),),
+            Text(
+              '$response',
+              style: TextStyle(fontSize: 20, color: Colors.blue.shade700),
+            ),
             SizedBox(
               height: 10,
             ),
@@ -296,7 +301,7 @@ class _SignupState extends State<Signup> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   )),
-            ),
+            ),SizedBox(height: 40,)
           ],
         ),
       ),

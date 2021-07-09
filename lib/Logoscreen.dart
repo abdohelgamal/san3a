@@ -11,7 +11,7 @@ class _LogoScreenState extends State<LogoScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 2), () {Navigator.pushReplacementNamed(context, 'interface');
-     // Navigator.pushNamed(context, 'interface');
+    
     });
   }
 

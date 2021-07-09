@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:advanced_search/advanced_search.dart';
 import 'package:flutter/material.dart';
+import 'package:san3a/Filters.dart';
 import 'package:san3a/Product.dart';
 import 'package:san3a/api/auth.dart';
 
@@ -14,17 +15,24 @@ class Searchresults extends StatefulWidget {
 }
 
 class _SearchresultsState extends State<Searchresults> {
+  String title = '    ';
   List<Widget> prodwidgets = [];
   List<String> searchableList = [];
+  Set<String> categoriesnames = {};
+
   void initState() {
     super.initState();
     AuthApi.getProducts().then((res) {
       List prods = jsonDecode(res.body);
       for (int i = 0; i < prods.length; i++) {
         searchableList.add(prods[i]['name']);
+        categoriesnames.add(prods[i]['product_category']);
       }
       if (widget.category != null) {
         print('[if] ${widget.category}');
+        setState(() {
+          title = widget.category;
+        });
         List<Widget> temp = [];
         for (int index = 0; index < prods.length; index++) {
           if (prods[index]['product_category'] == widget.category) {
@@ -131,6 +139,9 @@ class _SearchresultsState extends State<Searchresults> {
         }
       } else if (widget.searchword != null) {
         print('[Else if] ${widget.searchword}');
+        setState(() {
+          title = widget.searchword;
+        });
         List<Widget> temp = [];
         for (int index = 0; index < prods.length; index++) {
           if (prods[index]['name'] == widget.searchword) {
@@ -250,7 +261,7 @@ class _SearchresultsState extends State<Searchresults> {
             padding: EdgeInsets.all(15),
             child: Column(children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
                     splashRadius: 30,
@@ -260,7 +271,15 @@ class _SearchresultsState extends State<Searchresults> {
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back_ios_rounded),
+                  ),SizedBox(width: 20,),
+                  Text(
+                    '$title',
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.black54,
+                    ),
                   ),
+
                   // AdvancedSearch(
                   //     // This is basically an Input Text Field
                   //     data: searchableList,
@@ -288,11 +307,17 @@ class _SearchresultsState extends State<Searchresults> {
                   //       // user is trying to lookup something, may be you want to help him?
                   //     },
                   //   ),
-               
+
                   IconButton(
                       icon: Icon(Icons.filter_alt_outlined,
                           size: 40, color: Colors.grey),
-                      onPressed: () {})
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Filters(categoriesnames)));
+                      })
                 ],
               ),
               SizedBox(

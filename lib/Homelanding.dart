@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:san3a/Categories.dart';
 // ignore: unused_import
 import 'ForgotPassword.dart';
 // ignore: unused_import
 import 'LandingLayout.dart';
 // ignore: unused_import
 import 'TutorialList.dart';
-// ignore: unused_import
-import 'TutorialPage.dart';
 // ignore: unused_import
 import 'Cart.dart';
 // ignore: unused_import
@@ -39,7 +38,10 @@ class _BtmsheetState extends State<Btmsheet> {
       child: Column(
         children: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CustomerRequest()));
+              },
               child: Text(
                 'Customer request',
                 style: TextStyle(
@@ -48,7 +50,10 @@ class _BtmsheetState extends State<Btmsheet> {
                     fontWeight: FontWeight.w400),
               )),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Categories()));
+              },
               child: Text(
                 'Categories',
                 style: TextStyle(
@@ -57,23 +62,17 @@ class _BtmsheetState extends State<Btmsheet> {
                     fontWeight: FontWeight.w400),
               )),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => TutorialList()));
+              },
               child: Text(
-                'Tutorial',
+                'Tutorials',
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
                     fontWeight: FontWeight.w400),
               )),
-          // TextButton(
-          //     onPressed: () {},
-          //     child: Text(
-          //       'Seller product',
-          //       style: TextStyle(
-          //           fontSize: 20,
-          //           color: Colors.grey,
-          //           fontWeight: FontWeight.w400),
-          //     )),
           TextButton(
               onPressed: () {},
               child: Text(
@@ -115,19 +114,20 @@ class Homelanding extends StatefulWidget {
 
 class _HomelandingState extends State<Homelanding> {
   List<dynamic> pagename = [Landing(), ' ', Cart(), UserProfile()];
-  Widget _currentpage = Landing();
+  int _index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //  bottomSheet: Btmsheet(),
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: _index,
         backgroundColor: Colors.blue,
         onTap: (index) {
           if (index == 0 || index == 2 || index == 3) {
             setState(() {
-              _currentpage = pagename[index];
+              _index = index;
             });
           }
         },
@@ -139,23 +139,34 @@ class _HomelandingState extends State<Homelanding> {
         type: BottomNavigationBarType.shifting,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+              icon: GestureDetector(
+                child: Icon(Icons.search),
+                onTap: () {
+                  if (_index != 0) {
+                    setState(() {
+                      _index = 0;
+                    });
+                  }
+                },
+              ),
+              label: 'Search'),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), label: 'Profile'),
           BottomNavigationBarItem(
-              icon: IconButton(icon:Icon(
-                    Icons.dehaze_rounded,),
-                  
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context, builder: (context) => Btmsheet());
-                  },),
+              icon: GestureDetector(
+                child: Icon(Icons.dehaze_rounded),
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context, builder: (context) => Btmsheet());
+                },
+              ),
               label: 'More'),
         ],
       ),
-      body: SafeArea(child: _currentpage),
+      body: SafeArea(child: pagename[_index]),
       backgroundColor: Colors.white,
     );
   }

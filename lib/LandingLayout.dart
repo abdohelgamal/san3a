@@ -274,15 +274,15 @@ class _LandingState extends State<Landing> {
                               )));
                 },
                 onSearchClear: () {},
-                onSubmitted: (value, value2) {
-                  // now you have a submitted search
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Searchresults(
-                                searchword: value,
-                              )));
-                },
+                // onSubmitted: (value, value2) {
+                //   // now you have a submitted search
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => Searchresults(
+                //                 searchword: value,
+                //               )));
+                // },
                 onEditingProgress: (value, value2) {
                   // user is trying to lookup something, may be you want to help him?
                 },
