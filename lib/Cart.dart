@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:san3a/Checkout.dart';
+import 'package:san3a/api/cartData.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -10,6 +12,10 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
+    final cart = cartProvider.cart;
+
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -25,8 +31,18 @@ class _CartState extends State<Cart> {
               )),
           Expanded(
             child: ListView.separated(
+              itemCount: cart.items.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                  height: 1,
+                );
+              },
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                final item = cart.items[index];
+
                 return Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
@@ -38,9 +54,7 @@ class _CartState extends State<Cart> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(
-                                'https://www.gisreportsonline.com/media/__sized__/report_images/El-Sisi_rz8JByi-crop-c0-5__0-5-1340x828-70.jpg',
-                              ),
+                              image: NetworkImage(item.image),
                               fit: BoxFit.cover),
                         ),
                       ),
@@ -51,7 +65,7 @@ class _CartState extends State<Cart> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Product name',
+                            item.name,
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: 20,
@@ -61,17 +75,7 @@ class _CartState extends State<Cart> {
                             height: 10,
                           ),
                           Text(
-                            'Product size',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Product price',
+                            '${item.price * item.quantity}',
                             style: TextStyle(
                               color: Colors.red,
                               fontSize: 20,
@@ -88,13 +92,18 @@ class _CartState extends State<Cart> {
                                 icon: Icon(Icons.horizontal_rule),
                                 iconSize: 23,
                                 color: Colors.grey[600],
-                                onPressed: () {},
+                                onPressed: item.quantity == 1
+                                    ? null
+                                    : () {
+                                        cartProvider.updateQuantity(index,
+                                            by: -1);
+                                      },
                               ),
                               SizedBox(
                                 width: 15,
                               ),
                               Text(
-                                '5',
+                                '${item.quantity}',
                                 style: TextStyle(fontSize: 20),
                               ),
                               SizedBox(
@@ -107,7 +116,23 @@ class _CartState extends State<Cart> {
                                 ),
                                 iconSize: 23,
                                 color: Colors.grey[600],
-                                onPressed: () {},
+                                onPressed: () {
+                                  cartProvider.updateQuantity(index);
+                                },
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              IconButton(
+                                splashRadius: 15,
+                                icon: Icon(
+                                  Icons.remove,
+                                ),
+                                iconSize: 23,
+                                color: Colors.grey[600],
+                                onPressed: () {
+                                  cartProvider.removeItem(item.id);
+                                },
                               ),
                             ],
                           ),
@@ -115,14 +140,6 @@ class _CartState extends State<Cart> {
                       )
                     ],
                   ),
-                );
-              },
-              itemCount: 5,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                  height: 1,
                 );
               },
             ),
@@ -153,7 +170,7 @@ class _CartState extends State<Cart> {
                     height: 8,
                   ),
                   Text(
-                    'Price',
+                    '${cartProvider.totalPrice}',
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.black,
@@ -181,11 +198,17 @@ class _CartState extends State<Cart> {
                     'Checkout',
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Checkout()));},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Checkout()));
+                  },
                 ),
               ),
             ],
-          ),SizedBox(height: 20,)
+          ),
+          SizedBox(
+            height: 20,
+          )
         ]),
       )),
     );

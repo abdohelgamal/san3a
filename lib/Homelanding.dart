@@ -19,7 +19,7 @@ import 'BestSeller.dart';
 // ignore: unused_import
 import 'Searchresult.dart';
 // ignore: unused_import
-import 'Profile.dart';
+import 'Prof.dart';
 // ignore: unused_import
 import 'CustomerRequest.dart';
 

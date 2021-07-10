@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:san3a/api/cartData.dart';
 import 'api/auth.dart';
 
 class Product extends StatefulWidget {
@@ -86,6 +88,9 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final isInCart = cartProvider.isInCart(widget.itemid);
+
     return Scaffold(
       body: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
@@ -137,26 +142,6 @@ class _ProductState extends State<Product> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(//TODO: remove colors
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Colors available :',
-                            style: TextStyle(fontSize: 23, color: Colors.blue),
-                          ),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          IconButton(
-                            color: Colors.purple,
-                            icon: Icon(
-                              Icons.circle,
-                            ),
-                            onPressed: () {},
-                            iconSize: 40,
-                          ),
-                        ],
-                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -181,25 +166,25 @@ class _ProductState extends State<Product> {
                         height: 15,
                       ),
                       Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            runAlignment: WrapAlignment.start,
-                            direction: Axis.vertical,
-                            children: [
-                              Text(
-                                'Related to :',
-                                style:
-                                    TextStyle(fontSize: 23, color: Colors.blue),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text('${prod['tags']}',
-                                //TODO return tags without prackets
-                               // '${prod['tags']}',
-                                style: TextStyle(
-                                    fontSize: 23, color: Colors.black54),
-                              ),
-                            ]),
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          runAlignment: WrapAlignment.start,
+                          direction: Axis.vertical,
+                          children: [
+                            Text(
+                              'Related to :',
+                              style:
+                                  TextStyle(fontSize: 23, color: Colors.blue),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '${prod['tags']}',
+                              // '${prod['tags']}',
+                              style: TextStyle(
+                                  fontSize: 23, color: Colors.black54),
+                            ),
+                          ]),
                       SizedBox(
                         height: 15,
                       ),
@@ -219,11 +204,13 @@ class _ProductState extends State<Product> {
                             icon: Icon(Icons.horizontal_rule),
                             iconSize: 23,
                             color: Colors.grey[600],
-                            onPressed: () {
-                              setState(() {
-                                if (itemnumber > 0) itemnumber--;
-                              });
-                            },
+                            onPressed: isInCart || itemnumber == 1
+                                ? null
+                                : () {
+                                    setState(() {
+                                      itemnumber--;
+                                    });
+                                  },
                           ),
                           SizedBox(
                             width: 15,
@@ -242,7 +229,7 @@ class _ProductState extends State<Product> {
                             ),
                             iconSize: 23,
                             color: Colors.grey[600],
-                            onPressed: () {
+                            onPressed: isInCart ? null : () {
                               setState(() {
                                 itemnumber++;
                               });
@@ -273,19 +260,35 @@ class _ProductState extends State<Product> {
                                   },
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: isInCart
+                                  ? () {
+                                      cartProvider.removeItem(prod["id"]);
+                                    }
+                                  : () {
+                                      cartProvider.addItem(
+                                        prod["id"],
+                                        prod["name"],
+                                        double.parse(prod["price"]),
+                                        prod["image"],
+                                        itemnumber,
+                                      );
+                                    },
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      Icons.shopping_cart_outlined,
+                                      isInCart
+                                          ? Icons.close
+                                          : Icons.shopping_cart_outlined,
                                       size: 30,
                                     ),
                                     SizedBox(
                                       width: 20,
                                     ),
                                     Text(
-                                      'Add to cart',
+                                      isInCart
+                                          ? 'Remove from cart'
+                                          : 'Add to cart',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ]))),

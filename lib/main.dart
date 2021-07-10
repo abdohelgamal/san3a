@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:san3a/Categories.dart';
 import 'package:san3a/api/auth.dart';
+import 'package:san3a/api/cartData.dart';
 import 'package:san3a/api/userdata.dart';
 import 'LandingLayout.dart';
 import 'BestSeller.dart';
@@ -12,15 +13,13 @@ import 'Interface.dart';
 import 'Signuppage.dart';
 import 'Logoscreen.dart';
 import 'Login.dart';
-import 'Checkoutconfirm.dart';
 import 'Cart.dart';
 import 'Checkout.dart';
 import 'Homelanding.dart';
 import 'Pay.dart';
-import 'Profile.dart';
+import 'Prof.dart';
 import 'Selleraddproduct.dart';
 import 'TutorialList.dart';
-
 import 'package:flutter/material.dart';
 import 'api/userdata.dart';
 
@@ -29,6 +28,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: MyApp(),
     ),
@@ -43,9 +43,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
+
+    // fetch current user
     final cache = FlutterSecureStorage();
+    User _user;
     cache.read(key: 'user').then((res) {
-      if (res == null) return;
+      if (res == null) return null;
 
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final userData = jsonDecode(res);
@@ -62,7 +65,28 @@ class _MyAppState extends State<MyApp> {
 
       userProvider.user = user;
       AuthApi.token = userData['token'];
+      _user = user;
+      return cache.read(key: 'cart.${user.id}');
+    }).then((cart) {
+      if (_user == null) return;
+
+      var cartProvider = Provider.of<CartProvider>(context, listen: false);
+      cartProvider.init(_user.id, cart);
     });
+    // fetch current user cart (if exist)
+    //     .then((_) {
+    //   return Future.wait([
+    //     AuthApi.getCart(),
+    //     AuthApi.getCartItems(),
+    //   ]);
+    // }).then((values) {
+    //   final cartJson = values[0].body;
+    //   final itemsJson = values[1].body;
+
+    //   var cartProvider = Provider.of<CartProvider>(context, listen: false);
+
+    //   cartProvider.cart = CartModel.fromJson(cartJson, itemsJson);
+    // });
   }
 
   @override
@@ -74,7 +98,6 @@ class _MyAppState extends State<MyApp> {
           'cart': (context) => Cart(),
           'categories': (context) => Categories(),
           'chkout': (context) => Checkout(),
-          'chkoutconfirm': (context) => Checkoutconfirm(),
           'custreq': (context) => CustomerRequest(),
           'forgotpass': (context) => Forgotpassword(),
           'homelnd': (context) => Homelanding(),
@@ -95,7 +118,6 @@ class _MyAppState extends State<MyApp> {
           'selleradd': (context) => SellerAddProduct(),
           'signup': (context) => Signup(),
           'tutlst': (context) => TutorialList(),
-        
         },
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,

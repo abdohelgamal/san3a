@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:advanced_search/advanced_search.dart';
 import 'package:flutter/material.dart';
-import 'package:san3a/Filters.dart';
 import 'package:san3a/Product.dart';
 import 'package:san3a/api/auth.dart';
 
@@ -45,27 +43,27 @@ class _SearchresultsState extends State<Searchresults> {
                           builder: (context) =>
                               Product(itemid: prods[index]['id'])));
                 },
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                '${prods[index]['image']}',
-                              ),
-                              fit: BoxFit.fitWidth),
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              '${prods[index]['image']}',
+                            ),
+                            fit: BoxFit.fitWidth),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                                            child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -82,42 +80,42 @@ class _SearchresultsState extends State<Searchresults> {
                           )
                         ],
                       ),
-                      
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // ignore: deprecated_member_use
-                            RaisedButton(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 35, vertical: 10),
-                              color: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Product(
-                                            itemid: prods[index]['id'])));
-                              },
-                              child: Text(
-                                'Shop now',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                    ),
+                    
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // ignore: deprecated_member_use
+                          RaisedButton(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 35, vertical: 10),
+                            color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.favorite_border),
-                              onPressed: () {},
-                              color: Colors.red,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Product(
+                                          itemid: prods[index]['id'])));
+                            },
+                            child: Text(
+                              'Shop now',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.favorite_border),
+                            onPressed: () {},
+                            color: Colors.red,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -143,93 +141,79 @@ class _SearchresultsState extends State<Searchresults> {
                           builder: (context) =>
                               Product(itemid: prods[index]['id'])));
                 },
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                '${prods[index]['image']}',
-                              ),
-                              fit: BoxFit.fitWidth),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${prods[index]['name']}',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              '${prods[index]['image']}',
                             ),
-                            Text(
-                              '${prods[index]['price']}',
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.red,
-                              ),
-                            )
-                          ],
-                        ),
+                            fit: BoxFit.fitWidth),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.yellow,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // ignore: deprecated_member_use
-                            RaisedButton(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 35, vertical: 10),
-                              color: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Product(
-                                            itemid: prods[index]['id'])));
-                              },
-                              child: Text(
-                                'Shop now',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.favorite_border),
-                              onPressed: () {},
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                                            child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${prods[index]['name']}',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '${prods[index]['price']}',
+                            style: TextStyle(
+                              fontSize: 25,
                               color: Colors.red,
                             ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // ignore: deprecated_member_use
+                          RaisedButton(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 35, vertical: 10),
+                            color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Product(
+                                          itemid: prods[index]['id'])));
+                            },
+                            child: Text(
+                              'Shop now',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.favorite_border),
+                            onPressed: () {},
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

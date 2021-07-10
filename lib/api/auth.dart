@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:san3a/api/cartData.dart';
 import 'package:san3a/api/res.dart';
 
 class AuthApi {
@@ -92,7 +93,6 @@ class AuthApi {
       "password2": pass2
     }).then((res) {
       Map body = jsonDecode(res.body);
-      //print('body $body');
 
       if (res.statusCode < 300) {
         return Res(success: true, message: body["detail"]);
@@ -100,24 +100,54 @@ class AuthApi {
 
       final key = body.keys.first;
       return Res(success: false, message: body[key][0]);
-
-      /*if (body["username"] != null) {
-         
-        return Res(success: false, message: body["username"] );
-      } else if (body["email"] != null) {
-        
-        return Res(success: false, message:  body["email"]);
-      } else if (body["password1"] != null) {
-         
-        return Res(success: false, message: body["password1"] );
-      }else if(body["non_field_errors"] != null){
-      return Res(success: false, message:body["non_field_errors"] );}*/
     });
   }
 
-  static getcart(){
-    return http.get(_api(url: '/api/rest-auth/registration/'),headers: _headers).then((res) {
-      Map body = jsonDecode(res.body);
-    });
-    }
+  static Future getCart() {
+    return http.get(_api(url: '/api/cart/'), headers: _headers);
+  }
+
+  static Future getCartItems() {
+    return http.get(_api(url: '/api/cart_items/'), headers: _headers);
+  }
+
+  static Future decreaseCartItem(int id, int productId, int quantity) {
+    return http.put(
+      _api(url: '/api/cart_items/$id/'),
+      headers: _headers,
+      body: {
+        "product": productId,
+        "quantity": quantity,
+      },
+    );
+  }
+
+  static Future<http.Response> createCartItem(CartItem p) {
+    return http.post(
+      _api(url: '/api/cart_items/'),
+      headers: _headers,
+      body: {
+        "product": p.id.toString(),
+        "quantity": p.quantity.toString(),
+      },
+    );
+  }
+
+  static Future<http.Response> createOrder(Map order) {
+    return http.post(
+      _api(url: '/api/orders/'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Token $token'
+      },
+      body: jsonEncode(order),
+    );
+  }
+
+  static Future<http.Response> getOrders() {
+    return http.get(
+      _api(url: '/api/orders/'),
+      headers: _headers,
+    );
+  }
 }
