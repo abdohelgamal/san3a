@@ -82,18 +82,7 @@ class _SearchresultsState extends State<Searchresults> {
                           )
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.yellow,
-                            ),
-                          ],
-                        ),
-                      ),
+                      
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
@@ -308,16 +297,16 @@ class _SearchresultsState extends State<Searchresults> {
                   //     },
                   //   ),
 
-                  IconButton(
-                      icon: Icon(Icons.filter_alt_outlined,
-                          size: 40, color: Colors.grey),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Filters(categoriesnames)));
-                      })
+                  // IconButton(
+                  //     icon: Icon(Icons.filter_alt_outlined,
+                  //         size: 40, color: Colors.grey),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) =>
+                  //                   Filters(categoriesnames)));
+                  //     })
                 ],
               ),
               SizedBox(

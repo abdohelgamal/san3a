@@ -67,34 +67,6 @@ class _BestSellerState extends State<BestSeller> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                'no. of  Reviews',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow[600],
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '4.7',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 20,
-                                ),
-                              )
-                            ],
-                          ),
                           Text(
                             element['price'],
                             style: TextStyle(

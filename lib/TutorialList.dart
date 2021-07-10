@@ -19,7 +19,8 @@ class _TutorialListState extends State<TutorialList> {
       List tutoriallistadata = jsonDecode(res.body);
       print(tutoriallistadata);
       tutoriallistadata.forEach((element) {
-        widget.add(Padding(padding: const EdgeInsets.all(8),
+        widget.add(Padding(
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -55,21 +56,24 @@ class _TutorialListState extends State<TutorialList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: true,
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
             child: Padding(
-      padding: EdgeInsets.fromLTRB(25, 15, 25, 40),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 40),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
                       iconSize: 40,
                       color: Colors.red,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       icon: Icon(Icons.arrow_back_ios_rounded),
                     ),
                     SizedBox(
@@ -109,7 +113,7 @@ class _TutorialListState extends State<TutorialList> {
                   height: 20,
                 ),
                 Expanded(
-                                  child: ListView.separated(
+                  child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: widgets.length,
                     // widgets.length,
@@ -125,7 +129,7 @@ class _TutorialListState extends State<TutorialList> {
                     },
                   ),
                 )
-          ]),
-    )));
+              ]),
+        )));
   }
 }

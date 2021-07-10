@@ -137,7 +137,7 @@ class _ProductState extends State<Product> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      Row(//TODO: remove colors
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
