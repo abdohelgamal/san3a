@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:san3a/CustomerRequest.dart';
+import 'package:san3a/Myorders.dart';
+import 'package:san3a/TutorialList.dart';
 import 'package:san3a/api/auth.dart';
 
 class PlaceholderAvatar extends StatefulWidget {
@@ -71,222 +74,227 @@ class _UserProfileState extends State<UserProfile> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: hasData
-            ? [CircularProgressIndicator()]
+                ? [CircularProgressIndicator()]
                 : [
-          Container(
-          child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                minRadius: 60,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.white,
-                child: Image.network(
-                  '$avatar',
-                  width: 150,
-                  height: 150,
-                ),
-              ),
-              // PlaceholderAvatar( link : avatar ),
-              Text(
-                '$username',
-                style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ).,
-              Text('$mail',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 23,
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  height: 45,
-                  width: 150,
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                    textColor: Colors.red,
-                    color: Colors.white,
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(fontSize: 17),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            minRadius: 60,
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.white,
+                            child: Image.network(
+                              '$avatar',
+                              width: 150,
+                              height: 150,
+                            ),
+                          ),
+                          // PlaceholderAvatar( link : avatar ),
+                          Text(
+                            '$username',
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text('$mail',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 23,
+                              )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                              height: 45,
+                              width: 150,
+                              // ignore: deprecated_member_use
+                              child: RaisedButton(
+                                textColor: Colors.red,
+                                color: Colors.white,
+                                child: Text(
+                                  'Edit Profile',
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                onPressed: () {},
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(15)),
+                              )),
+                          SizedBox(
+                            height: 35,
+                          )
+                        ],
+                      ),
                     ),
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(15)),
-                  )),
-              SizedBox(
-                height: 35,
-              )
-            ],
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyOrders()));
+                            },
+                            child: ListTile(
+                                title: Text(
+                                  'Orders',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {},
+                            child: ListTile(
+                                title: Text(
+                                  'Address',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {},
+                            child: ListTile(
+                                title: Text(
+                                  'Contact us',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {},
+                            child: ListTile(
+                                title: Text(
+                                  'Finished Orders',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {Navigator.push(context,MaterialPageRoute(builder: (context) => CustomerRequest()));},
+                            child: ListTile(
+                                title: Text(
+                                  'Customer Request',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context )=> TutorialList()));},
+                            child: ListTile(
+                                title: Text(
+                                  'Tutorials',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {},
+                            child: ListTile(
+                                title: Text(
+                                  'Rate Our App',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            indent: 25,
+                            endIndent: 25,
+                          ),
+                          // ignore: deprecated_member_use
+                          FlatButton(
+                            onPressed: () {},
+                            child: ListTile(
+                                title: Text(
+                                  'Make a Suggestion',
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.grey.shade600),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
           ),
         ),
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Orders',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Address',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Contact us',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Finished Orders',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Customer Request',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Tutorial',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Rate Our App',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-              const Divider(
-                height: 0.5,
-                indent: 25,
-                endIndent: 25,
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () {},
-                child: ListTile(
-                    title: Text(
-                      'Make a Suggestion',
-                      style: TextStyle(
-                          fontSize: 21,
-                          color: Colors.grey.shade600),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )),
-              ),
-            ],
-          ),
-        )
-        ],
       ),
-    ),
-    ),
     );
   }
 }

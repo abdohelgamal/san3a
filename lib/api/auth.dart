@@ -144,8 +144,8 @@ class AuthApi {
     );
   }
 
-  static Future<http.Response> getOrders() {
-    return http.get(
+  static Future<http.Response> getOrders() async {
+    return await http.get(
       _api(url: '/api/orders/'),
       headers: _headers,
     );

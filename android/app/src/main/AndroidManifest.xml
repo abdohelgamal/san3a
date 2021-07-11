@@ -2,7 +2,7 @@
     package="com.example.san3a">
    <application
         android:label="san3a"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/apturefremovebgpreview">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
