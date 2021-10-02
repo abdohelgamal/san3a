@@ -121,8 +121,9 @@ class _MyAppState extends State<MyApp> {
         },
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        ),debugShowCheckedModeBanner: false,
         home: Scaffold(
+          
           backgroundColor: Colors.white,
           body: LogoScreen(),
           resizeToAvoidBottomInset: true,

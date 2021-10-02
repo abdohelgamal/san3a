@@ -13,9 +13,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-
     final cart = cartProvider.cart;
-
     return Scaffold(
       body: SafeArea(
           child: Padding(

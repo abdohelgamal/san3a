@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
 
     var userProvider = Provider.of<UserProvider>(context, listen: false);
     userProvider.user = user;
-    Navigator.pushNamed(context, 'homelnd');
+    Navigator.pushReplacementNamed(context, 'homelnd');
 
     var cache = FlutterSecureStorage();
 
@@ -49,6 +49,7 @@ class _LoginState extends State<Login> {
       var cartProvider = Provider.of<CartProvider>(context, listen: false);
       cartProvider.init(user.id, json);
     });
+    
   }
 
   // // ignore: missing_return

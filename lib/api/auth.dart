@@ -8,7 +8,7 @@ class AuthApi {
   static get _headers => {"Authorization": 'Token $token'};
 
   static Uri _api({String url = '/'}) {
-    return Uri.parse('http://20.37.244.156$url');
+    return Uri.parse('http://20.52.51.184$url');
   }
 
   static getuserdata() {
