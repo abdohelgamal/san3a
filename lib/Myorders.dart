@@ -27,8 +27,24 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: data.length == 0
-          ? Center(
-              child: CircularProgressIndicator(),
+          ? SafeArea(
+              child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(iconSize: 40,
+                        color: Colors.black,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.close),
+                      ),
+                    ), Center(child: Text('No orders yet',style: TextStyle(fontSize: 30),),)
+                  ],
+                ),
+              ),
             )
           : SafeArea(
               child: Padding(

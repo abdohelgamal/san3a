@@ -49,6 +49,7 @@ class _SearchresultsState extends State<Searchresults> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.42,
                       height: 200,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
@@ -62,26 +63,28 @@ class _SearchresultsState extends State<Searchresults> {
                     SizedBox(
                       height: 20,
                     ),
-                    Expanded(
-                                            child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${prods[index]['name']}',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text(
+                            '${prods[index]['name']}',maxLines: 2,
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            '${prods[index]['price']}',
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.red,
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        Text(
+                          '${prods[index]['price']}',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.red,
+                          ),
+                        )
+                      ],
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
@@ -99,8 +102,8 @@ class _SearchresultsState extends State<Searchresults> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Product(
-                                          itemid: prods[index]['id'])));
+                                      builder: (context) =>
+                                          Product(itemid: prods[index]['id'])));
                             },
                             child: Text(
                               'Shop now',
@@ -147,6 +150,7 @@ class _SearchresultsState extends State<Searchresults> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.42,
                       height: 200,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
@@ -161,13 +165,17 @@ class _SearchresultsState extends State<Searchresults> {
                       height: 20,
                     ),
                     Expanded(
-                                            child: Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${prods[index]['name']}',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: Text(
+                              '${prods[index]['name']}',
+                              maxLines: 2,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Text(
                             '${prods[index]['price']}',
@@ -179,7 +187,6 @@ class _SearchresultsState extends State<Searchresults> {
                         ],
                       ),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
@@ -197,8 +204,8 @@ class _SearchresultsState extends State<Searchresults> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Product(
-                                          itemid: prods[index]['id'])));
+                                      builder: (context) =>
+                                          Product(itemid: prods[index]['id'])));
                             },
                             child: Text(
                               'Shop now',
@@ -244,53 +251,19 @@ class _SearchresultsState extends State<Searchresults> {
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back_ios_rounded),
-                  ),SizedBox(width: 20,),
-                  Text(
-                    '$title',
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.black54,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Container(width: MediaQuery.of(context).size.width * 0.7,
+                    child: Text(
+                      '$title',overflow: TextOverflow.fade,maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
-
-                  // AdvancedSearch(
-                  //     // This is basically an Input Text Field
-                  //     data: searchableList,
-                  //     maxElementsToDisplay: 7,
-                  //     onItemTap: (index, stringword) {
-                  //       print('[SearchWord], $stringword');
-                  //       Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => Searchresults(
-                  // searchword: stringword,
-                  //                   )));
-                  //     },
-                  //     onSearchClear: () {},
-                  //     onSubmitted: (value, value2) {
-                  //       // now you have a submitted search
-                  //       Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => Searchresults(
-                  // searchword: value,
-                  //                   )));
-                  //     },
-                  //     onEditingProgress: (value, value2) {
-                  //       // user is trying to lookup something, may be you want to help him?
-                  //     },
-                  //   ),
-
-                  // IconButton(
-                  //     icon: Icon(Icons.filter_alt_outlined,
-                  //         size: 40, color: Colors.grey),
-                  //     onPressed: () {
-                  //       Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) =>
-                  //                   Filters(categoriesnames)));
-                  //     })
                 ],
               ),
               SizedBox(

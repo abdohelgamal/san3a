@@ -37,7 +37,7 @@ class _CategoriesState extends State<Categories> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
+                    Container(width: MediaQuery.of(context).size.width * 0.42,
                         height: 200,
                         child: Image.network(categories[index]['image'])),
                     SizedBox(

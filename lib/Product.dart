@@ -50,6 +50,9 @@ class _ProductState extends State<Product> {
                 padding: EdgeInsets.all(5),
                 child: Text(
                   relatedproducts[index]['name'],
+                  softWrap: true,
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -145,13 +148,15 @@ class _ProductState extends State<Product> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      Row(textBaseline: TextBaseline.alphabetic,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${prod['name']}',
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                          Container(width: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              '${prod['name']}',softWrap: true,
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Text(
                             '${prod['price']}',
@@ -179,7 +184,7 @@ class _ProductState extends State<Product> {
                               width: 20,
                             ),
                             Text(
-                              '${prod['tags']}',
+                              prod['tags'].isEmpty ? ' ' : '${prod['tags']}',
                               // '${prod['tags']}',
                               style: TextStyle(
                                   fontSize: 23, color: Colors.black54),
@@ -229,11 +234,13 @@ class _ProductState extends State<Product> {
                             ),
                             iconSize: 23,
                             color: Colors.grey[600],
-                            onPressed: isInCart ? null : () {
-                              setState(() {
-                                itemnumber++;
-                              });
-                            },
+                            onPressed: isInCart
+                                ? null
+                                : () {
+                                    setState(() {
+                                      itemnumber++;
+                                    });
+                                  },
                           ),
                         ],
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -308,11 +315,11 @@ class _ProductState extends State<Product> {
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        height: 310,
+                        height: 340,
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: GridView.count(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.7,
+                            childAspectRatio: 0.66,
                             mainAxisSpacing: 25,
                             crossAxisSpacing: 10,
                             shrinkWrap: true,

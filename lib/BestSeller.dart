@@ -49,10 +49,13 @@ class _BestSellerState extends State<BestSeller> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.network(
-                      element['image'],
+                    Container(
                       height: 120,
+                      alignment: Alignment.center,
                       width: 120,
+                      child: Image.network(
+                        element['image'],
+                      ),
                     ),
                     Container(
                       height: 120,
@@ -60,12 +63,15 @@ class _BestSellerState extends State<BestSeller> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            element['name'],
-                            style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
+                          Container(width: MediaQuery.of(context).size.width *0.35,
+                            child: Text(
+                              element['name'],
+                              overflow: TextOverflow.fade,maxLines: 2,
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                           Text(
                             element['price'],

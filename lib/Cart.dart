@@ -28,119 +28,127 @@ class _CartState extends State<Cart> {
                         TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
               )),
           Expanded(
-            child: ListView.separated(
-              itemCount: cart.items.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                  height: 1,
-                );
-              },
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = cart.items[index];
+            child: cart.items.isEmpty
+                ? Center(
+                    child: Text(
+                      'Cart is Empty , Please Add Products',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30, color: Colors.grey),
+                    ),
+                  )
+                : ListView.separated(
+                    itemCount: cart.items.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        color: Colors.grey,
+                        thickness: 1,
+                        height: 1,
+                      );
+                    },
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final item = cart.items[index];
 
-                return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(item.image),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.name,
-                            style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '${item.price * item.quantity}',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 20,
+                      return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 150,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(item.image),
+                                    fit: BoxFit.cover),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                splashRadius: 15,
-                                icon: Icon(Icons.horizontal_rule),
-                                iconSize: 23,
-                                color: Colors.grey[600],
-                                onPressed: item.quantity == 1
-                                    ? null
-                                    : () {
-                                        cartProvider.updateQuantity(index,
-                                            by: -1);
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.name,
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  '${item.price * item.quantity}',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    IconButton(
+                                      splashRadius: 15,
+                                      icon: Icon(Icons.horizontal_rule),
+                                      iconSize: 23,
+                                      color: Colors.grey[600],
+                                      onPressed: item.quantity == 1
+                                          ? null
+                                          : () {
+                                              cartProvider.updateQuantity(index,
+                                                  by: -1);
+                                            },
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      '${item.quantity}',
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    IconButton(
+                                      splashRadius: 15,
+                                      icon: Icon(
+                                        Icons.add,
+                                      ),
+                                      iconSize: 23,
+                                      color: Colors.grey[600],
+                                      onPressed: () {
+                                        cartProvider.updateQuantity(index);
                                       },
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                '${item.quantity}',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              IconButton(
-                                splashRadius: 15,
-                                icon: Icon(
-                                  Icons.add,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    IconButton(
+                                      splashRadius: 15,
+                                      icon: Icon(
+                                        Icons.remove,
+                                      ),
+                                      iconSize: 23,
+                                      color: Colors.grey[600],
+                                      onPressed: () {
+                                        cartProvider.removeItem(item.id);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                iconSize: 23,
-                                color: Colors.grey[600],
-                                onPressed: () {
-                                  cartProvider.updateQuantity(index);
-                                },
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              IconButton(
-                                splashRadius: 15,
-                                icon: Icon(
-                                  Icons.remove,
-                                ),
-                                iconSize: 23,
-                                color: Colors.grey[600],
-                                onPressed: () {
-                                  cartProvider.removeItem(item.id);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
           Divider(
             height: 1,
@@ -187,19 +195,27 @@ class _CartState extends State<Cart> {
                 height: 60,
                 width: 210,
                 // ignore: deprecated_member_use
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(23)),
-                  color: Colors.red[500],
-                  textColor: Colors.white,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(23))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.red[500]),
+                      textStyle: MaterialStateProperty.all(TextStyle(
+                        color: Colors.white,
+                      ))),
                   child: Text(
                     'Checkout',
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Checkout()));
-                  },
+                  onPressed: cart.items.isEmpty
+                      ? null
+                      : () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Checkout()));
+                        },
                 ),
               ),
             ],

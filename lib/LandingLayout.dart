@@ -49,7 +49,8 @@ class _LandingState extends State<Landing> {
       http.Response productsRes = responses[1];
       List products = jsonDecode(productsRes.body);
       List categories = jsonDecode(categoriesRes.body);
-      var featuredItem = AuthApi.getProductsFeatured(products)[0];
+      List featuredItem = AuthApi.getProductsFeatured(products);
+      featuredItem.shuffle();
       List bestSeller = AuthApi.getProductsBestseller(products);
 
       final _search = Set<String>();
@@ -100,10 +101,11 @@ class _LandingState extends State<Landing> {
 
       List<Widget> featured = [
         Image.network(
-          featuredItem['image'],
+          featuredItem[0]['image'],
           fit: BoxFit.cover,
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -146,10 +148,12 @@ class _LandingState extends State<Landing> {
                     height: 10,
                   ),
                   Text(
-                    featuredItem['description'],
+                    featuredItem[0]['description'],overflow: TextOverflow.fade,
+                    softWrap: true,
+                    maxLines: 5,
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.white,
+                        color: Colors.grey[400],
                         fontWeight: FontWeight.w300),
                   ),
                   SizedBox(
@@ -165,7 +169,7 @@ class _LandingState extends State<Landing> {
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) {
                             return Product(
-                              itemid: featuredItem['id'],
+                              itemid: featuredItem[0]['id'],
                             );
                           },
                         ),
@@ -187,7 +191,8 @@ class _LandingState extends State<Landing> {
       ];
 
       List<Widget> bestSellerList = [];
-      for (int index = 0; index < min(bestSeller.length, 6); index++) {
+      bestSeller.shuffle();
+      for (int index = 0; index < min(bestSeller.length, 8); index++) {
         bestSellerList.add(GestureDetector(
           onTap: () {
             Navigator.push(
@@ -211,7 +216,7 @@ class _LandingState extends State<Landing> {
               Padding(
                 padding: EdgeInsets.all(5),
                 child: Text(
-                  bestSeller[index]['name'],
+                  bestSeller[index]['name'],softWrap: true,maxLines: 1,
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,

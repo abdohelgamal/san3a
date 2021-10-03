@@ -116,7 +116,7 @@ class _CheckoutconfirmState extends State<Checkoutconfirm> {
                           style: TextStyle(fontSize: 17),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => MyOrders()));
